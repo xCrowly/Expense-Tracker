@@ -6,7 +6,7 @@ function NavBar() {
     return (
         <Navbar bg="light">
             <Container>
-                <Navbar.Brand>Expanse tracker</Navbar.Brand>
+                <Navbar.Brand>Expense tracker</Navbar.Brand>
             </Container>
         </Navbar>
     )

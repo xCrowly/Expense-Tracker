@@ -7,7 +7,7 @@ function FormBody() {
 
 
 
-        <>
+        <div className="mb-3 container-sm p-3 bg-light rounded-1">
             <InputGroup className="mb-3">
                 <InputGroup.Text id="basic-addon1">@</InputGroup.Text>
                 <Form.Control
@@ -44,7 +44,7 @@ function FormBody() {
                 <InputGroup.Text>With textarea</InputGroup.Text>
                 <Form.Control as="textarea" aria-label="With textarea" />
             </InputGroup>
-        </>
+        </div>
     )
 }
 
