@@ -7,7 +7,7 @@ function FormBody() {
 
 
 
-        <div className="mb-3 container-sm p-3 bg-light rounded-1">
+        <div className="mb-3 form-size p-3 bg-light rounded-1">
             <InputGroup className="mb-3">
                 <InputGroup.Text id="basic-addon1">@</InputGroup.Text>
                 <Form.Control

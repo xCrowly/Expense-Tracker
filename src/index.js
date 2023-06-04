@@ -4,7 +4,9 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './assets/scss/styles.css';
 import FormBody from "./components/form";
+import History from "./components/history";
 import NavBar from "./components/navbar";
+import SignupPage from "./components/signup-login";
 import reportWebVitals from './reportWebVitals';
 
 const navbar = ReactDOM.createRoot(document.getElementById('nav-bar'));
@@ -12,15 +14,20 @@ navbar.render(
     <NavBar />
 );
 
-const formBody = ReactDOM.createRoot(document.getElementById('form-body'));
-formBody.render(
-    <FormBody />
+// const formBody = ReactDOM.createRoot(document.getElementById('form-body'));
+// formBody.render(
+//     <div >
+//         <FormBody />
+//         <History />
+//     </div>
+// );
+
+const loginSignup = ReactDOM.createRoot(document.getElementById('login-page'));
+loginSignup.render(
+    <div >
+        <SignupPage />
+    </div>
 );
-
-
-
-
-
 
 
 

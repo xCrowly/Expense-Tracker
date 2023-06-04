@@ -84,8 +84,8 @@
   --bs-body-line-height: 1.5;
   --bs-body-color: #212529;
   --bs-body-color-rgb: 33, 37, 41;
-  --bs-body-bg: #ffffff;
-  --bs-body-bg-rgb: 15, 56, 64;
+  --bs-body-bg: #c7d9dd;
+  --bs-body-bg-rgb: 199, 217, 221;
   --bs-emphasis-color: #000;
   --bs-emphasis-color-rgb: 0, 0, 0;
   --bs-secondary-color: rgba(33, 37, 41, 0.75);
@@ -2455,10 +2455,10 @@ textarea.form-control-lg {
   outline: 0;
 }
 .form-range:focus::-webkit-slider-thumb {
-  box-shadow: 0 0 0 1px #0F3840, 0 0 0 0.25rem rgba(13, 110, 253, 0.25);
+  box-shadow: 0 0 0 1px #c7d9dd, 0 0 0 0.25rem rgba(13, 110, 253, 0.25);
 }
 .form-range:focus::-moz-range-thumb {
-  box-shadow: 0 0 0 1px #0F3840, 0 0 0 0.25rem rgba(13, 110, 253, 0.25);
+  box-shadow: 0 0 0 1px #c7d9dd, 0 0 0 0.25rem rgba(13, 110, 253, 0.25);
 }
 .form-range::-moz-focus-outer {
   border: 0;
@@ -11864,6 +11864,21 @@ textarea.form-control-lg {
 }
 .main-color {
   background: var(--main-color);
+}
+
+.login-size {
+  max-width: 300px;
+  margin: 0 auto;
+}
+
+.form-size {
+  max-width: 576px;
+  margin: 0 auto;
+}
+
+.history-size {
+  max-width: 576px;
+  margin: 0 auto;
 }
 
 /*# sourceMappingURL=styles.css.map */
