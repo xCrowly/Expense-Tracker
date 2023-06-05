@@ -4,22 +4,23 @@ import Table from 'react-bootstrap/Table';
 function History() {
 
     return (
-        <div className="history-size p-0 pt-3 rounded-1">
+        <div className="history-size rounded-1">
             <Table striped bordered hover>
                 <thead>
                     <tr>
-                        <th>#</th>
-                        <th>First Name</th>
-                        <th>Last Name</th>
-                        <th>Username</th>
+                        <th></th>
+                        <th className="text-success">Amount</th>
+                        <th>Details</th>
+                        <th>Date</th>
+                        <th className="text-danger">X</th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr>
                         <td>1</td>
-                        <td>Mark</td>
-                        <td>Otto</td>
-                        <td>@mdo</td>
+                        <td>105.50</td>
+                        <td>Buying piano</td>
+                        <td>05/05/2024</td>
                     </tr>
                     <tr>
                         <td>2</td>

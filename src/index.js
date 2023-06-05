@@ -14,20 +14,27 @@ navbar.render(
     <NavBar />
 );
 
-// const formBody = ReactDOM.createRoot(document.getElementById('form-body'));
-// formBody.render(
-//     <div >
-//         <FormBody />
-//         <History />
-//     </div>
-// );
-
 const loginSignup = ReactDOM.createRoot(document.getElementById('login-page'));
 loginSignup.render(
     <div >
         <SignupPage />
     </div>
 );
+
+const formBody = ReactDOM.createRoot(document.getElementById('form-body'));
+formBody.render(
+    <div >
+        <FormBody />
+    </div>
+);
+
+const history = ReactDOM.createRoot(document.getElementById('history'));
+history.render(
+    <div >
+        <History />
+    </div>
+);
+
 
 
 

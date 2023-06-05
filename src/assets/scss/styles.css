@@ -11868,17 +11868,22 @@ textarea.form-control-lg {
 
 .login-size {
   max-width: 300px;
-  margin: 0 auto;
+  margin: 0 auto 15px auto;
 }
 
 .form-size {
   max-width: 576px;
   margin: 0 auto;
+  padding: 15px 15px 55px 15px;
+}
+
+.submit-button {
+  float: right;
 }
 
 .history-size {
   max-width: 576px;
-  margin: 0 auto;
+  margin: 15px auto;
 }
 
 /*# sourceMappingURL=styles.css.map */
