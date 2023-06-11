@@ -3,6 +3,8 @@ import BootStrap from "bootstrap";
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './assets/scss/styles.css';
+// import app1 from "./components/firebaseConfig";
+// import app2 from "./components/firebaseDatabase";
 import FormBody from "./components/form";
 import History from "./components/history";
 import NavBar from "./components/navbar";
@@ -20,20 +22,19 @@ loginSignup.render(
         <SignupPage />
     </div>
 );
+// const formBody = ReactDOM.createRoot(document.getElementById('form-body'));
+// formBody.render(
+//     <div >
+//         <FormBody />
+//     </div>
+// );
 
-const formBody = ReactDOM.createRoot(document.getElementById('form-body'));
-formBody.render(
-    <div >
-        <FormBody />
-    </div>
-);
-
-const history = ReactDOM.createRoot(document.getElementById('history'));
-history.render(
-    <div >
-        <History />
-    </div>
-);
+// const history = ReactDOM.createRoot(document.getElementById('history'));
+// history.render(
+//     <div >
+//         <History />
+//     </div>
+// );
 
 
 
