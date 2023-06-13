@@ -21,6 +21,7 @@ function signIn(email, password) {
 
                 const user = userCredential.user;
                 console.log("signed in")
+                window.location.href = "home";
                 // ...
             }
         )

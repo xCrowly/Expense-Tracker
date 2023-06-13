@@ -1,5 +1,5 @@
 import { initializeApp } from "firebase/app";
-import { createUserWithEmailAndPassword, getAuth } from "firebase/auth";
+import { createUserWithEmailAndPassword, getAuth, linkWithRedirect } from "firebase/auth";
 
 const firebaseConfig = {
     apiKey: "AIzaSyBR6aiIYUwDLuBtDeTI1A5_krxYPOLB6iM",
@@ -26,6 +26,7 @@ function signUp(email, password) {
                 console.log("user")
                 console.log("signed up")
                 alert("Signed up successfully! 😊")
+                window.location.href = "home";
             })
         .catch(
             (error) => {

@@ -14,5 +14,5 @@ for (let index = 0; index < 2; index++) {
 
 }
 
-export const app2 = initializeApp(appSettings) 
+export const app2 = initializeApp(appSettings)
 

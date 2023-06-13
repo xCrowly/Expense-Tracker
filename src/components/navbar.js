@@ -4,9 +4,9 @@ import Navbar from 'react-bootstrap/Navbar';
 
 function NavBar() {
     return (
-        <Navbar bg="light">
+        <Navbar bg="light" className="mb-3">
             <Container>
-                <Navbar.Brand>Expense tracker</Navbar.Brand>
+                <Navbar.Brand className="mx-auto fw-bold">Expense tracker</Navbar.Brand>
             </Container>
         </Navbar>
     )

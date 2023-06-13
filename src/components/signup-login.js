@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
-import app from "./firebase/firebaseConfig";
 import signIn from "./firebase/signIn";
 import signUp from "./firebase/signUp";
 
@@ -12,20 +11,20 @@ function SignupPage() {
     const [password, setPassword] = useState('');
 
     // States for checking the errors
-    const [submitted, setSubmitted] = useState(false);
+    // const [submitted, setSubmitted] = useState(false);
     const [error, setError] = useState(false);
 
     // Handling the name change
     const handleName = (e) => {
         setName(e.target.value);
-        setSubmitted(false);
+        // setSubmitted(false);
         // console.log(e.target.value)
     };
 
     // Handling the password change
     const handlePassword = (e) => {
         setPassword(e.target.value);
-        setSubmitted(false);
+        // setSubmitted(false);
         // console.log(e.target.value)
     };
 
@@ -35,7 +34,7 @@ function SignupPage() {
         if (email === '' || password === '' || password.length < 6) {
             setError(true);
         } else {
-            setSubmitted(true);
+            // setSubmitted(true);
             signUp(email, password);
             setError(false);
         }
@@ -47,7 +46,7 @@ function SignupPage() {
         if (email === '' || password === '' || password.length < 6) {
             setError(true);
         } else {
-            setSubmitted(true);
+            // setSubmitted(true);
             signIn(email, password);
             setError(false);
         }
