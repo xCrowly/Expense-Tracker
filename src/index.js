@@ -4,11 +4,8 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import App from "./App";
 import './assets/scss/styles.css';
-import reportWebVitals from './reportWebVitals';
 
-const app = ReactDOM.createRoot(document.getElementById('nav-bar'));
+const app = ReactDOM.createRoot(document.getElementById('main-body'));
 app.render(
     <App />
 );
-
-reportWebVitals();

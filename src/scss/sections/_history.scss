@@ -1,6 +1,38 @@
 @use "../custom";
 
 .history-size {
-    max-width: 576px;
+    max-width: 768px;
     margin: 15px auto;
+    padding: 0 15px;
+}
+
+.acc-style {
+    background-color: white !important;
+    padding: 0 !important;
+}
+
+.acc-body {
+    background-color: white !important;
+    padding: 1px !important;
+}
+
+.acc-btn {
+    background-color: var(--bs-danger) !important;
+    color: var(--bs-white) !important;
+    text-align: center;
+
+    &:hover {
+        background-color: brown !important;
+    }
+
+    cursor: pointer;
+}
+
+.acc-table {
+    margin: 0 !important;
+
+}
+
+#acc-body1 {
+    padding-bottom: 70px;
 }

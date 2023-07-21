@@ -8,8 +8,8 @@ function Error() {
                 <h4>404 page not found</h4>
             </div>
             <div className="d-flex justify-content-center align-content-center pt-3">
-                <Link to="/" className="btn bg-primary 
-                ">Home</Link>
+                <Link to="/home" className="btn bg-white text-danger"
+                >Home</Link>
             </div>
         </div>
     )

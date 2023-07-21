@@ -1,5 +1,6 @@
 import { initializeApp } from "firebase/app";
-import { createUserWithEmailAndPassword, getAuth, linkWithRedirect } from "firebase/auth";
+import { createUserWithEmailAndPassword, getAuth } from "firebase/auth";
+import getUserData from "./getUserData";
 
 const firebaseConfig = {
     apiKey: "AIzaSyBR6aiIYUwDLuBtDeTI1A5_krxYPOLB6iM",
@@ -16,15 +17,16 @@ initializeApp(firebaseConfig);
 function signUp(email, password) {
 
     const auth = getAuth();
-    console.log(auth)
 
     createUserWithEmailAndPassword(auth, email, password)
         .then(
             (userCredential) => {
                 // Signed in 
                 const user = userCredential.user;
-                console.log("user")
-                console.log("signed up")
+                localStorage.setItem('email', user.email);
+                localStorage.setItem('token', user.accessToken);
+                localStorage.setItem('id', user.uid);
+                getUserData(localStorage.getItem('id'))
                 alert("Signed up successfully! 😊")
                 window.location.href = "home";
             })

@@ -16,21 +16,24 @@ const firebaseConfig = {
   appId: "1:1054083508897:web:e39a246e81fccbccee1ee0"
 };
 
-function app(N, P) {
 
-  const appDatabase = initializeApp(firebaseConfig);
-  const database = getDatabase(appDatabase);
-  const getUserInfo1 = ref(database, "getUserInfo");
+// function addData(N, P) {
 
-  onValue(getUserInfo1, function (snapshot) {
-    console.log("ar")
-    console.log(snapshot)
-  });
+//   const appDatabase = initializeApp(firebaseConfig);
+//   const database = getDatabase(appDatabase);
+//   const getUserInfo1 = ref(database, "getUserInfo");
+
+//   onValue(getUserInfo1, function (snapshot) {
+//     console.log("ar")
+//     console.log(snapshot)
+//   });
+
+//   push(getUserInfo1, [N, P])
+// }
+
+export const appDatabase = initializeApp(firebaseConfig);
+export const db = getDatabase(appDatabase);
 
 
-  push(getUserInfo1, [N, P])
-  
-}
-
-// Initialize Firebase
-export default app;
+// // Initialize Firebase
+// export default writeUserDir;

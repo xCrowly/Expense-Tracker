@@ -1,5 +1,6 @@
 import { initializeApp } from "firebase/app";
 import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
+import getUserData from "./getUserData";
 
 const firebaseConfig = {
     apiKey: "AIzaSyBR6aiIYUwDLuBtDeTI1A5_krxYPOLB6iM",
@@ -14,15 +15,18 @@ const firebaseConfig = {
 initializeApp(firebaseConfig);
 
 function signIn(email, password) {
+
     const auth = getAuth();
     signInWithEmailAndPassword(auth, email, password)
         .then(
             (userCredential) => {
-
                 const user = userCredential.user;
-                console.log("signed in")
+                localStorage.setItem('email', user.email);
+                localStorage.setItem('token', user.accessToken)
+                localStorage.setItem('id', user.uid)
+                getUserData(localStorage.getItem('id'))
                 window.location.href = "home";
-                // ...
+                return;
             }
         )
         .catch(
@@ -30,6 +34,7 @@ function signIn(email, password) {
                 const errorCode = error.code;
                 const errorMessage = error.message;
                 console.log(errorCode, errorMessage)
+                alert(errorCode)
             }
         );
 
