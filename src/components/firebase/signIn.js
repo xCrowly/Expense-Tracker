@@ -25,7 +25,7 @@ function signIn(email, password) {
                 localStorage.setItem('token', user.accessToken)
                 localStorage.setItem('id', user.uid)
                 getUserData(localStorage.getItem('id'))
-                window.location.href = "home";
+                window.location.href = "/home";
                 return;
             }
         )

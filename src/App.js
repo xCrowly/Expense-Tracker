@@ -20,14 +20,14 @@ function App() {
                     </div>
                 } />
 
-                <Route path='home' element={
+                <Route path='/home' element={
                     <div>
                         <FormBody />
                         <Footer />
                     </div>
                 } />
 
-                <Route path='history' element={
+                <Route path='/history' element={
                     <div>
                         <History />
                         <Footer />

@@ -28,7 +28,7 @@ function signUp(email, password) {
                 localStorage.setItem('id', user.uid);
                 getUserData(localStorage.getItem('id'))
                 alert("Signed up successfully! 😊")
-                window.location.href = "home";
+                window.location.href = "/home";
             })
         .catch(
             (error) => {
