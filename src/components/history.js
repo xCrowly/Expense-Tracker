@@ -19,7 +19,7 @@ function History() {
 
     // ind refers to the current user index
     let ind = 0;
-    
+
     // this refers to the data entries after sorted by date
     let dataProccessed
 
@@ -43,14 +43,19 @@ function History() {
             if (index === dataProccessed.length - 1) {
                 ind++;
                 return (<Accordion.Item key={index + 1} eventKey={index + 1}>
-                    <Accordion.Header>{dataProccessed[index][1].date.substr(0, 7)}</Accordion.Header>
+                    <Accordion.Header>{
+                        dataProccessed[index][1].date[5] +
+                        dataProccessed[index][1].date[6] +
+                        "/" +
+                        dataProccessed[index][1].date.substr(0, 4)
+                    }</Accordion.Header>
                     <Accordion.Body className="acc-body">
                         <Table className="acc-table" striped bordered hover>
                             <thead>
                                 <tr>
                                     <th className="text-success">Amount</th>
                                     <th>Note</th>
-                                    <th>Date</th>
+                                    <th>Day</th>
                                     <th className="text-danger"></th>
                                 </tr>
                             </thead>
@@ -64,7 +69,7 @@ function History() {
                                                 return (<tr id={childs[0]} key={childs[0]}>
                                                     <td>{childs[1].cash}</td>
                                                     <td>{childs[1].note}</td>
-                                                    <td>{childs[1].date}</td>
+                                                    <td>{childs[1].date.substr(8)}</td>
                                                     <td className="acc-btn"
                                                         onClick={() => {
                                                             return [removeUserData(
@@ -106,14 +111,19 @@ function History() {
                 !== dataProccessed[index + 1][1].date.substr(0, 7)) {
                 ind += 1;
                 return [<Accordion.Item key={index + 1} eventKey={index + 1}>
-                    <Accordion.Header>{dataProccessed[index][1].date.substr(0, 7)}</Accordion.Header>
+                    <Accordion.Header>{
+                        dataProccessed[index][1].date[5] +
+                        dataProccessed[index][1].date[6] +
+                        "/" +
+                        dataProccessed[index][1].date.substr(0, 4)
+                    }</Accordion.Header>
                     <Accordion.Body className="acc-body">
                         <Table className="acc-table" striped bordered hover>
                             <thead>
                                 <tr>
                                     <th className="text-success">Amount</th>
                                     <th>Note</th>
-                                    <th>Date</th>
+                                    <th>Day</th>
                                     <th className="text-danger"></th>
                                 </tr>
                             </thead>
@@ -121,7 +131,7 @@ function History() {
                                 <tr id={dataProccessed[index][0]} key={dataProccessed[index][0]}>
                                     <td>{dataProccessed[index][1].cash}</td>
                                     <td>{dataProccessed[index][1].note}</td>
-                                    <td>{dataProccessed[index][1].date}</td>
+                                    <td>{dataProccessed[index][1].date.substr(8)}</td>
                                     <td className="acc-btn"
                                         onClick={() => {
                                             return [removeUserData(
@@ -157,14 +167,19 @@ function History() {
             else if (dataProccessed[index][1].date.substr(0, 7)
                 === dataProccessed[index + 1][1].date.substr(0, 7)) {
                 return [<Accordion.Item key={index + 1} eventKey={index + 1}>
-                    <Accordion.Header>{dataProccessed[index][1].date.substr(0, 7)}</Accordion.Header>
+                    <Accordion.Header>{
+                        dataProccessed[index][1].date[5] +
+                        dataProccessed[index][1].date[6] +
+                        "/" +
+                        dataProccessed[index][1].date.substr(0, 4)
+                    }</Accordion.Header>
                     <Accordion.Body className="acc-body">
                         <Table className="acc-table" striped bordered hover>
                             <thead>
                                 <tr>
                                     <th className="text-success">Amount</th>
                                     <th>Note</th>
-                                    <th>Date</th>
+                                    <th>Day</th>
                                     <th className="text-danger"></th>
                                 </tr>
                             </thead>
@@ -178,7 +193,7 @@ function History() {
                                                 return (<tr id={childs[0]} key={childs[0]}>
                                                     <td>{childs[1].cash}</td>
                                                     <td>{childs[1].note}</td>
-                                                    <td>{childs[1].date}</td>
+                                                    <td>{childs[1].date.substr(8)}</td>
                                                     <td className="acc-btn"
                                                         onClick={() => {
                                                             return [removeUserData(

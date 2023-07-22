@@ -11927,8 +11927,22 @@ textarea.form-control-lg {
   padding-bottom: 70px;
 }
 
+@media (max-width: 300px) {
+  .home-btn {
+    font-size: xx-small !important;
+    padding: 2px;
+  }
+  .nav-title {
+    font-size: small !important;
+  }
+}
 .navbar-styling {
   background-color: var(--bs-light);
+}
+
+.home-btn {
+  font-size: small;
+  padding: 5px;
 }
 
 #my-footer {

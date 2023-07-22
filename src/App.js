@@ -17,6 +17,7 @@ function App() {
                 <Route path='/' element={
                     <div>
                         <SignupPage />
+                        <Footer />
                     </div>
                 } />
 

@@ -24,18 +24,18 @@ function NavBar() {
     }
 
     return (
-        <Navbar className="navbar-styling mb-3 shadow" sticky="top">
-            <Container >
-                <Navbar.Brand className=" fw-bold">
+        <Navbar className="navbar-styling mb-3 p-1 shadow" sticky="top">
+            <Container>
+                <Navbar.Brand className="nav-title me-0 text-primary fw-bold">
                     Expense tracker
                 </Navbar.Brand>
                 <div>
-                    <Link id="home-btn" hidden={homeBtnHide ? true : false} to="/home" variant="success" type="button"
-                        className="btn bg-success text-white me-3">
+                    <Link hidden={homeBtnHide ? true : false} to="/home" variant="success" type="button"
+                        className="btn home-btn bg-success text-white me-2 flex-shrink-0">
                         Home
                     </Link>
                     <Button hidden={homeBtnHide ? true : false} onClick={signOut}
-                        variant="outline-danger" >
+                        variant="outline-danger" className="home-btn  rounded-5" >
                         Sign out
                     </Button>
                 </div>

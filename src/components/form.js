@@ -81,7 +81,7 @@ function FormBody() {
                 </div>
             </div>
 
-            <div className="form-size bg-light rounded-1 shadow">
+            <div className="form-size bg-light rounded-1 shadow rounded-4">
                 <Form>
                     <Form.Label >Expenses</Form.Label>
                     <div className="messages text-danger">
@@ -112,7 +112,7 @@ function FormBody() {
                         onClick={
                             handleSubmit
                         }
-                        className="submit-button">
+                        className="submit-button ms-3 rounded-5">
                         Submit
                     </Button>
                     <Link to="/history" variant="success" type="button"
