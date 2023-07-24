@@ -87,7 +87,7 @@ function SignupPage() {
                     <Form.Check type="checkbox" label="Check me out" />
                 </Form.Group> */}
                     <div className="d-flex justify-content-end">
-                        <Button className="rounded-2" onClick={handleSubmitSignUp} type="submit" variant="primary">
+                        <Button className="rounded-2" onClick={handleSubmitSignUp} variant="primary">
                             SignUp
                         </Button>
                         <Button className="ms-3  rounded-5" onClick={handleSubmitSignIn}
