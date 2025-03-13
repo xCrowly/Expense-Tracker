@@ -3,16 +3,22 @@ import Button from 'react-bootstrap/Button';
 import Container from 'react-bootstrap/Container';
 import Navbar from 'react-bootstrap/Navbar';
 import { Link } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 
 function NavBar() {
 
+    // check the current location of the user
+    const location = useLocation();
+    
     // check if the user has signed in in order to show these buttons
     const [homeBtnHide, sethomeBtnHide] = useState(true);
+    
+    // check if the user has signed in in order to show these buttons
     useEffect(() => {
         if (localStorage.getItem('token')) {
-            return sethomeBtnHide(prev => !prev)
+            return sethomeBtnHide(false)
         }
-    }, [])
+    }, [location.pathname])
 
     // delete user data from local storage
     function signOut() {

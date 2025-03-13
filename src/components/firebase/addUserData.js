@@ -13,16 +13,24 @@ const firebaseConfig = {
     appId: "1:1054083508897:web:e39a246e81fccbccee1ee0"
 };
 
-function addUserData(userId, cash, date, note) {
-    const appDatabase = initializeApp(firebaseConfig);
-    const db = getDatabase(appDatabase);
+const appDatabase = initializeApp(firebaseConfig);
+const db = getDatabase(appDatabase);
 
-    push(ref(db, 'users/' + userId), {
-        cash: cash,
-        date: date,
-        note: note
-    });
-}
+// Add the entry to Firebase
+const addUserData = async (userId, cash, date, note) => {
+    try {
+
+        await push(ref(db, 'users/' + userId), {
+            cash: cash,
+            date: date,
+            note: note
+        });
+        console.log("Entry pushed successfully");
+    } catch (error) {
+        console.error("Error pushing entry:", error);
+        throw error; // Re-throw the error to handle it in the calling function
+    }
+};
 
 // // Initialize Firebase
 export default addUserData;

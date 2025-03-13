@@ -14,14 +14,19 @@ const firebaseConfig = {
     appId: "1:1054083508897:web:e39a246e81fccbccee1ee0"
 };
 
-function removeUserData(userId, childId) {
-    const appDatabase = initializeApp(firebaseConfig);
-    const db = getDatabase(appDatabase);
-    const dataBaseRef = ref(db, "users/" + userId + "/" + childId)
-    remove(dataBaseRef)
-    document.getElementById(childId).remove();
-    getUserData(localStorage.getItem('id'))
-}
+const appDatabase = initializeApp(firebaseConfig);
+const db = getDatabase(appDatabase);
 
-// // Initialize Firebase
+// Remove the entry from Firebase
+const removeUserData = async (userId, childId) => {
+    try {
+        const dataBaseRef = ref(db, `users/${userId}/${childId}`);
+        await remove(dataBaseRef); // Remove the entry from Firebase
+        console.log("Entry deleted successfully");
+    } catch (error) {
+        console.error("Error deleting entry:", error);
+        throw error; // Re-throw the error to handle it in the calling function
+    }
+};
+
 export default removeUserData;

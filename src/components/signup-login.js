@@ -3,18 +3,25 @@ import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import signIn from "./firebase/signIn";
 import signUp from "./firebase/signUp";
+import { useNavigate } from "react-router-dom";
+
+/**
+ * SignupPage component allows users to sign up or log in using their email and password.
+ * It handles form submission, input changes, and displays error messages for invalid inputs.
+ */
 
 function SignupPage() {
     // States for registration
-    const [email, setName] = useState('');
+    const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-
-    // states for form errors
-    const [error, setError] = useState(false);
+    const [loading, setLoading] = useState(false);
+    const [loadingSignUp, setloadingSignUp] = useState(false);
+    const [error, setError] = useState("");
+    const navigate = useNavigate(); // Use the useNavigate hook
 
     // Handling the name change
     const handleName = (e) => {
-        setName(e.target.value);
+        setEmail(e.target.value);
     };
 
     // Handling the password change
@@ -22,50 +29,61 @@ function SignupPage() {
         setPassword(e.target.value);
     };
 
-    // Handling the form submission
+    // Handling the form submission signup
     const handleSubmitSignUp = async (e) => {
-        e.preventDefault();
-        if (email === '' || password === '' || password.length < 6) {
-            setError(true);
-        } else {
-            signUp(email, password)
-            setError(false);
+        e.preventDefault(); // Prevent the default form submission behavior
+
+        // Validate inputs
+        if (email === "" || password === "" || password.length < 6) {
+            setError("Please fill in all fields and ensure the password is at least 6 characters long.");
+            return;
+        }
+        setloadingSignUp(true); // Set loading state to true
+        setError(""); // Clear any previous errors
+
+        try {
+            // Call the signUp function
+            await signUp(email, password);
+
+            // Redirect to the home page after successful sign-up
+            navigate("/home");
+        } catch (error) {
+            // Handle errors
+            console.error("Error during sign-up:", error);
+            setError(error.message); // Display a user-friendly error message
+        } finally {
+            setloadingSignUp(false); // Set loading state to false
         }
     };
 
-    // Handling the form submission
+    // Handling the form submission signin
     const handleSubmitSignIn = async (e) => {
         e.preventDefault();
-        if (email === '' || password === '' || password.length < 6) {
-            setError(true);
-        } else {
-            signIn(email, password)
-            setError(false);
+        setLoading(true);
+        setError("");
+
+        try {
+            const { user } = await signIn(email, password, navigate);
+            console.log("Signed in successfully:", user);
+            navigate("/home"); // Navigate to the home page after successful sign-in
+        } catch (error) {
+            setError(error.message);
+        } finally {
+            setLoading(false);
         }
     };
 
-    const errorMessage = () => {
-        return (
-            <div
-                className="error"
-                style={{
-                    display: error ? '' : 'none',
-                }}>
-                <h4>Please enter a valid email & a minimum 6 digit Password</h4>
-            </div>
-        );
-    };
 
     return (
         <div className="pb-3">
             <div className="pb-3">
                 <div className="d-flex justify-content-center">
-                    <b>Hint:<b className="text-white fs-6 fw-light"> you can use any random email.</b></b>
+                    <b>Hint:<span className="text-white fs-6 fw-light"> you can use any random email.</span></b>
                 </div>
             </div>
             <div className="login-size rounded-4 p-3 bg-light rounded-1 shadow mt-1">
                 <div className="messages text-danger">
-                    {errorMessage()}
+                    {error && <div className="error">{error}</div>}
                 </div>
 
                 <Form>
@@ -83,17 +101,16 @@ function SignupPage() {
                             Minimum 6 characters.
                         </Form.Text>
                     </Form.Group>
-                    {/* <Form.Group className="mb-3" controlId="formBasicCheckbox">
-                    <Form.Check type="checkbox" label="Check me out" />
-                </Form.Group> */}
+
                     <div className="d-flex justify-content-end">
                         <Button className="rounded-2" onClick={handleSubmitSignUp} variant="primary">
-                            SignUp
+                            {loadingSignUp ? "Signing Up..." : "Sign Up"}
                         </Button>
                         <Button className="ms-3  rounded-5" onClick={handleSubmitSignIn}
                             type="submit" variant="outline-success" >
-                            Login
+                            {loading ? "Signing In..." : "Sign In"}
                         </Button>
+
                     </div>
                 </Form>
             </div>

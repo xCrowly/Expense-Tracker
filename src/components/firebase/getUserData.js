@@ -13,23 +13,34 @@ const firebaseConfig = {
     appId: "1:1054083508897:web:e39a246e81fccbccee1ee0"
 };
 
-function getUserData(userId) {
-    const appDatabase = initializeApp(firebaseConfig);
-    const db = getDatabase(appDatabase);
+const appDatabase = initializeApp(firebaseConfig);
+const db = getDatabase(appDatabase);
 
-    get(child(ref(db), "users/" + userId)).then((snapshot) => {
+// Fetch the user data from Firebase
+const getUserData = async (userId) => {
+    if (!userId) {
+        console.error("User ID is missing");
+        return null;
+    }
+    try {
+        const userRef = ref(db, `users/${userId}`);
+        const snapshot = await get(userRef);
+
         if (snapshot.exists()) {
-            // get the user data and save it into local storage
-            localStorage.setItem("data", JSON.stringify(snapshot.val()))
+            const userData = snapshot.val();
+            localStorage.setItem("data", JSON.stringify(userData)); // Save data to localStorage
+            return userData; // Return the fetched data
         } else {
-            localStorage.setItem("data", '')
+            localStorage.setItem("data", ""); // Clear localStorage if no data exists
             console.log("No data available");
+            return null;
         }
-    }).catch((error) => {
-        console.error(error);
-    });
+    } catch (error) {
+        console.error("Error fetching user data:", error);
+        throw error; // Re-throw the error to handle it in the calling function
+    }
+};
 
-}
 
 // // Initialize Firebase
 export default getUserData;
