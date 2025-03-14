@@ -11872,7 +11872,7 @@ textarea.form-control-lg {
 }
 
 #main-body {
-  height: 100vh !important;
+  min-height: 100vh !important;
 }
 
 .login-size {
@@ -11897,7 +11897,7 @@ textarea.form-control-lg {
 .history-size {
   max-width: 768px;
   margin: 15px auto;
-  padding: 0 15px;
+  padding: 0px 15px 45px 15px;
 }
 
 .acc-style {
@@ -11939,6 +11939,7 @@ textarea.form-control-lg {
 }
 .navbar-styling {
   background-color: var(--bs-light);
+  box-shadow: 0 2px 35px rgb(0, 0, 0);
 }
 
 .home-btn {
@@ -11948,21 +11949,26 @@ textarea.form-control-lg {
 
 @media (max-width: 768px) {
   .footer-text {
-    font-size: 0.75rem; /* Smaller font size for mobile */
+    font-size: 0.75rem;
+    /* Smaller font size for mobile */
   }
 }
 #my-footer {
   width: 100%;
-  background: var(--bs-light); /* Use Bootstrap's light theme color */
+  background: var(--bs-light);
+  /* Use Bootstrap's light theme color */
   position: fixed;
   bottom: 0;
-  padding: 10px 0; /* Increased padding for better spacing */
+  padding: 10px 0;
+  /* Increased padding for better spacing */
   display: flex;
   justify-content: center;
   align-items: center;
   flex-direction: column;
-  box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1); /* Add a subtle shadow for depth */
-  z-index: 1000; /* Ensure the footer stays above other content */
+  box-shadow: 0 -2px 35px rgb(0, 0, 0);
+  /* Add a subtle shadow for depth */
+  z-index: 1000;
+  /* Ensure the footer stays above other content */
 }
 
 .footer-text {
@@ -11970,21 +11976,30 @@ textarea.form-control-lg {
   justify-content: center;
   flex-direction: column;
   align-items: center;
-  text-align: center; /* Center-align text for better readability */
-  margin: 0 10px; /* Remove unnecessary margin */
-  font-size: 0.875rem; /* Use rem units for better scalability */
-  color: #333; /* Darker text color for better contrast */
+  text-align: center;
+  /* Center-align text for better readability */
+  margin: 0 10px;
+  /* Remove unnecessary margin */
+  font-size: 0.875rem;
+  /* Use rem units for better scalability */
+  color: #333;
+  /* Darker text color for better contrast */
 }
 
 .footer-text a {
-  color: #007bff; /* Bootstrap's primary blue color for links */
-  text-decoration: none; /* Remove underline */
-  font-weight: 500; /* Slightly bold for emphasis */
-  margin-top: 5px; /* Add spacing between text and link */
+  color: #007bff;
+  /* Bootstrap's primary blue color for links */
+  text-decoration: none;
+  /* Remove underline */
+  font-weight: 500;
+  /* Slightly bold for emphasis */
+  margin-top: 5px;
+  /* Add spacing between text and link */
 }
 
 .footer-text a:hover {
-  text-decoration: underline; /* Add underline on hover for better UX */
+  text-decoration: underline;
+  /* Add underline on hover for better UX */
 }
 
 /*# sourceMappingURL=styles.css.map */
