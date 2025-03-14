@@ -5,8 +5,9 @@
 }
 
 .body-bg {
-    background-color: #457b9d !important;
-
+    background: linear-gradient(to top left, #212529, #358b9a, #454d55),
+        radial-gradient(circle, #315d36, transparent);
+    background-blend-mode: overlay;
 }
 
 #main-body {

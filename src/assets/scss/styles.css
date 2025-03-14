@@ -11867,7 +11867,8 @@ textarea.form-control-lg {
 }
 
 .body-bg {
-  background-color: #457b9d !important;
+  background: linear-gradient(to top left, #212529, #358b9a, #454d55), radial-gradient(circle, #315d36, transparent);
+  background-blend-mode: overlay;
 }
 
 #main-body {
@@ -11927,13 +11928,13 @@ textarea.form-control-lg {
   padding-bottom: 70px;
 }
 
-@media (max-width: 300px) {
+@media (max-width: 760px) {
   .home-btn {
-    font-size: xx-small !important;
+    font-size: small !important;
     padding: 2px;
   }
   .nav-title {
-    font-size: small !important;
+    font-size: large !important;
   }
 }
 .navbar-styling {
@@ -11941,26 +11942,49 @@ textarea.form-control-lg {
 }
 
 .home-btn {
-  font-size: small;
+  font-size: medium;
   padding: 5px;
 }
 
+@media (max-width: 768px) {
+  .footer-text {
+    font-size: 0.75rem; /* Smaller font size for mobile */
+  }
+}
 #my-footer {
   width: 100%;
-  height: auto;
-  background: var(--bs-light);
-  display: flex;
+  background: var(--bs-light); /* Use Bootstrap's light theme color */
   position: fixed;
   bottom: 0;
-  padding: 5px;
+  padding: 10px 0; /* Increased padding for better spacing */
+  display: flex;
   justify-content: center;
   align-items: center;
-  box-shadow: 10px 15px 15px rgb(0, 0, 0);
   flex-direction: column;
+  box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1); /* Add a subtle shadow for depth */
+  z-index: 1000; /* Ensure the footer stays above other content */
 }
 
 .footer-text {
-  font-size: x-small;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  text-align: center; /* Center-align text for better readability */
+  margin: 0 10px; /* Remove unnecessary margin */
+  font-size: 0.875rem; /* Use rem units for better scalability */
+  color: #333; /* Darker text color for better contrast */
+}
+
+.footer-text a {
+  color: #007bff; /* Bootstrap's primary blue color for links */
+  text-decoration: none; /* Remove underline */
+  font-weight: 500; /* Slightly bold for emphasis */
+  margin-top: 5px; /* Add spacing between text and link */
+}
+
+.footer-text a:hover {
+  text-decoration: underline; /* Add underline on hover for better UX */
 }
 
 /*# sourceMappingURL=styles.css.map */

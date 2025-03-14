@@ -53,8 +53,8 @@ function FormBody() {
     return (
         <div id="form-body" className="px-3">
             <div className="pb-3">
-                <div className="d-flex justify-content-center">
-                    <b>Hello, <i className="text-white">{getName()}</i></b>
+                <div className="d-flex justify-content-center text-white fs-4">
+                    <b>Hello, <i>{getName()}</i></b>
                 </div>
             </div>
 

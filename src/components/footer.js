@@ -4,11 +4,15 @@ function Footer() {
     return (
         <div id="my-footer">
             <div className="footer-text">
-                This website is made by "Html, Css, Javascript, Bootstrap, Sass, React, React-routers and Firebase: Authentication & realtime database"
+                <div>
+                    This website is made with{" "}
+                    <strong>HTML, CSS, JavaScript, Bootstrap, Sass, React, React Router,</strong> and{" "}
+                    <strong>Firebase</strong> (Authentication & Realtime Database).
+                </div>
+                <a href="https://ahmedbadawy.netlify.app" target="_blank" rel="noreferrer">
+                    My portfolio here
+                </a>
             </div>
-            <a className="footer-text" href="https://ahmedbadawy.netlify.app" target="_blank" rel="noreferrer">
-                My portfolio here
-            </a>
         </div>
     )
 }

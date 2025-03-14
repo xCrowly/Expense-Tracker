@@ -1,12 +1,13 @@
 @use "../custom";
 
-@media (max-width: 300px) {
+@media (max-width: 760px) {
     .home-btn {
-        font-size: xx-small !important;
+        font-size: small !important;
         padding: 2px;
     }
-    .nav-title{
-        font-size: small !important;
+
+    .nav-title {
+        font-size: large !important;
     }
 }
 
@@ -16,6 +17,7 @@
 }
 
 .home-btn {
-    font-size: small;
+    font-size: medium;
     padding: 5px;
+
 }

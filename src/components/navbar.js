@@ -30,7 +30,7 @@ function NavBar() {
     }
 
     return (
-        <Navbar className="navbar-styling mb-3 p-1 shadow" sticky="top">
+        <Navbar className="navbar-styling mb-5 p-3 shadow" sticky="top">
             <Container>
                 <Navbar.Brand className="nav-title me-0 text-primary fw-bold">
                     Expense tracker
@@ -41,7 +41,7 @@ function NavBar() {
                         Home
                     </Link>
                     <Button hidden={homeBtnHide ? true : false} onClick={signOut}
-                        variant="outline-danger" className="home-btn  rounded-5" >
+                        variant="black" className="home-btn  rounded-5" >
                         Sign out
                     </Button>
                 </div>
