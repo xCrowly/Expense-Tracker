@@ -9,10 +9,10 @@ function NavBar() {
 
     // check the current location of the user
     const location = useLocation();
-    
+
     // check if the user has signed in in order to show these buttons
     const [homeBtnHide, sethomeBtnHide] = useState(true);
-    
+
     // check if the user has signed in in order to show these buttons
     useEffect(() => {
         if (localStorage.getItem('token')) {
@@ -30,14 +30,14 @@ function NavBar() {
     }
 
     return (
-        <Navbar className="navbar-styling mb-5 p-3 shadow" sticky="top">
+        <Navbar className="navbar-styling mb-3 p-3 shadow" sticky="top">
             <Container>
                 <Navbar.Brand className="nav-title me-0 text-primary fw-bold">
                     Expense tracker
                 </Navbar.Brand>
                 <div>
-                    <Link hidden={homeBtnHide ? true : false} to="/home" variant="success" type="button"
-                        className="btn home-btn bg-success text-white me-2 flex-shrink-0">
+                    <Link hidden={homeBtnHide ? true : false} to="/home" variant="secondary" type="button"
+                        className="btn home-btn bg-secondary text-white me-2 flex-shrink-0">
                         Home
                     </Link>
                     <Button hidden={homeBtnHide ? true : false} onClick={signOut}

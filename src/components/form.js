@@ -5,6 +5,7 @@ import InputGroup from 'react-bootstrap/InputGroup';
 import { Link } from "react-router-dom";
 import addUserData from './firebase/addUserData';
 import getUserData from "./firebase/getUserData";
+import SettingsModal from "./SettingsModal"; // Import the SettingsModal component
 
 function FormBody() {
     const [cash, setCash] = useState('');
@@ -12,6 +13,20 @@ function FormBody() {
     const [note, setNote] = useState('');
     const [error, setError] = useState(false);
     const [loading, setLoading] = useState(false);
+    const [showSettings, setShowSettings] = useState(false);
+
+    // Load saved values from localStorage
+    const [cashValues, setCashValues] = useState([]);
+    const [quickNotes, setQuickNotes] = useState([]);
+
+
+    useEffect(() => {
+
+        const savedCashValues = JSON.parse(localStorage.getItem("cashValues")) || [1, 2, 5, 10, 20, 50];
+        const savedQuickNotes = JSON.parse(localStorage.getItem("quickNotes")) || ["Groceries", "Transport", "Entertainment", "Utilities", "Rent", "Shopping"];
+        setCashValues(savedCashValues);
+        setQuickNotes(savedQuickNotes);
+    }, []);
 
     useEffect(() => {
         const token = localStorage.getItem('token');
@@ -51,7 +66,7 @@ function FormBody() {
     );
 
     return (
-        <div id="form-body" className="px-3">
+        <div id="form-body" className="px-3 mb-5">
             <div className="pb-3">
                 <div className="d-flex justify-content-center text-white fs-4">
                     <b>Hello, <i>{getName()}</i></b>
@@ -65,7 +80,7 @@ function FormBody() {
                         {errorMessage()}
                     </div>
                     <InputGroup>
-                        <InputGroup.Text>$</InputGroup.Text>
+                        <InputGroup.Text className="bg-success text-white">$</InputGroup.Text>
                         <Form.Control
                             value={cash}
                             onChange={(e) => setCash(e.target.value)}
@@ -75,6 +90,22 @@ function FormBody() {
                             id="cashValue"
                         />
                     </InputGroup>
+
+                    {/* Cash Buttons */}
+                    <div className="mb-3">
+                        <p className="mb-2">Quick Cash:</p>
+                        <div className="d-flex flex-wrap gap-2">
+                            {cashValues.map((amount) => (
+                                <Button
+                                    key={amount}
+                                    variant="outline-secondary"
+                                    onClick={() => setCash(amount)}
+                                >
+                                    ${amount}
+                                </Button>
+                            ))}
+                        </div>
+                    </div>
 
                     <label htmlFor="date" className="ms-3">Date: </label>
                     <input
@@ -87,7 +118,7 @@ function FormBody() {
                     />
 
                     <InputGroup>
-                        <InputGroup.Text id="Note">Note</InputGroup.Text>
+                        <InputGroup.Text id="Note" className="bg-warning text-dark">Note</InputGroup.Text>
                         <Form.Control
                             value={note}
                             onChange={(e) => setNote(e.target.value)}
@@ -95,14 +126,42 @@ function FormBody() {
                         />
                     </InputGroup>
 
+                    {/* Quick Notes Buttons */}
+                    <div className="mb-3">
+                        <p className="mb-2">Quick Notes:</p>
+                        <div className="d-flex flex-wrap gap-2">
+                            {quickNotes.map((text) => (
+                                <Button
+                                    key={text}
+                                    variant="outline-primary"
+                                    onClick={() => setNote(text)}
+                                >
+                                    {text}
+                                </Button>
+                            ))}
+                        </div>
+                    </div>
+
                     <br />
-                    <Button variant="outline-primary" type="submit" disabled={loading}>
+                    <Button variant="secondary" type="submit" disabled={loading}>
                         {loading ? 'Submitting...' : 'Submit'}
                     </Button>
-                    <Link to="/history" className="btn bg-success text-white button ms-2">
+                    <Link to="/history" className="btn bg-success text-white button ms-2 float-end">
                         History
                     </Link>
+                    <Button variant="dark" onClick={() => setShowSettings(true)} className="float-end">
+                        Settings
+                    </Button>
                 </Form>
+                {/* Settings Modal */}
+                <SettingsModal
+                    show={showSettings}
+                    handleClose={() => setShowSettings(false)}
+                    cashValues={cashValues}
+                    setCashValues={setCashValues}
+                    quickNotes={quickNotes}
+                    setQuickNotes={setQuickNotes}
+                />
             </div>
         </div>
     );

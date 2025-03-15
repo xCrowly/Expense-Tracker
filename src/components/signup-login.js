@@ -77,8 +77,8 @@ function SignupPage() {
     return (
         <div className="pb-3">
             <div className="pb-3">
-                <div className="d-flex justify-content-center">
-                    <b>Hint:<span className="text-white fs-6 fw-light"> you can use any random email.</span></b>
+                <div className="d-flex justify-content-center text-white">
+                    <b>Hint:<span className="fs-6 fw-light"> you can use any random email.</span></b>
                 </div>
             </div>
             <div className="login-size rounded-4 p-3 bg-light rounded-1 shadow mt-1">

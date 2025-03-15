@@ -2,7 +2,7 @@ import React from "react";
 
 function Footer() {
     return (
-        <div id="my-footer">
+        <footer id="my-footer" >
             <div className="footer-text">
                 <div>
                     This website is made with{" "}
@@ -13,7 +13,7 @@ function Footer() {
                     My portfolio here
                 </a>
             </div>
-        </div>
+        </footer>
     )
 }
 
