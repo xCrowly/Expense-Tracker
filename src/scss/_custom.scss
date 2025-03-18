@@ -1,14 +1,13 @@
 $body-bg: #ffffff;
-
 $primary: #1d3557;
 $secondary: #334155;
-$danger: #e63946;
+$danger: #d43240;
 $success: #237263;
 $info: #a8dadc;
 $light: #f1faee;
 
 :root {
-    --main-color: #0F3840;
+  --main-color: #0f3840;
 }
 
-@import "../../node_modules/bootstrap/scss/bootstrap.scss"
+@import "../../node_modules/bootstrap/scss/bootstrap.scss";

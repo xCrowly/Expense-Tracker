@@ -1,15 +1,15 @@
 @use "../custom";
 
 .main-color {
-    background: var(--main-color);
+  background: var(--main-color);
 }
 
 .body-bg {
-    background: linear-gradient(to top left, #212529, #358b9a, #454d55),
-        radial-gradient(circle, #315d36, transparent);
-    background-blend-mode: overlay;
+  background: linear-gradient(to top left, #212529, #133339, #191c1f),
+    radial-gradient(circle, #315d36, transparent);
+  background-blend-mode: overlay;
 }
 
 #main-body {
-    min-height: 100vh !important;
+  min-height: 100vh !important;
 }
