@@ -108,7 +108,7 @@ function FormBody() {
           {/* Cash Buttons */}
           <div className="mb-3">
             <p className="mb-2">Quick Cash:</p>
-            <div className="d-flex flex-wrap gap-2">
+            <div className="d-flex flex-wrap justify-content-around gap-2">
               {cashValues.map((amount) => (
                 <Button
                   key={amount}
@@ -147,7 +147,7 @@ function FormBody() {
           {/* Quick Notes Buttons */}
           <div className="mb-3">
             <p className="mb-2">Quick Notes:</p>
-            <div className="d-flex flex-wrap gap-2">
+            <div className="d-flex flex-wrap d-flex flex-wrap justify-content-around gap-2">
               {quickNotes.map((text) => (
                 <Button
                   key={text}

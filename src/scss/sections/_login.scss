@@ -1,6 +1,15 @@
 @use "../custom";
 
+.login-signup {
+  position: relative;
+  min-height: auto;
+  overflow: hidden;
+  margin-top: calc(100vh / 8);
+  padding-left: 15px;
+  padding-right: 15px;
+}
+
 .login-size {
-    max-width: 300px;
-    margin: 0 auto 15px auto;
+  max-width: 400px;
+  margin: 0 auto 15px auto;
 }

@@ -39,7 +39,7 @@
   --bs-info: #a8dadc;
   --bs-warning: #ffc107;
   --bs-danger: #d43240;
-  --bs-light: #f1faee;
+  --bs-light: #E4EFE7;
   --bs-dark: #212529;
   --bs-primary-rgb: 29, 53, 87;
   --bs-secondary-rgb: 51, 65, 85;
@@ -47,7 +47,7 @@
   --bs-info-rgb: 168, 218, 220;
   --bs-warning-rgb: 255, 193, 7;
   --bs-danger-rgb: 212, 50, 64;
-  --bs-light-rgb: 241, 250, 238;
+  --bs-light-rgb: 228, 239, 231;
   --bs-dark-rgb: 33, 37, 41;
   --bs-primary-text-emphasis: #0c1523;
   --bs-secondary-text-emphasis: #141a22;
@@ -2014,13 +2014,13 @@ progress {
 
 .table-light {
   --bs-table-color: #000;
-  --bs-table-bg: #f1faee;
-  --bs-table-border-color: #d9e1d6;
-  --bs-table-striped-bg: #e5eee2;
+  --bs-table-bg: #E4EFE7;
+  --bs-table-border-color: #cdd7d0;
+  --bs-table-striped-bg: #d9e3db;
   --bs-table-striped-color: #000;
-  --bs-table-active-bg: #d9e1d6;
+  --bs-table-active-bg: #cdd7d0;
   --bs-table-active-color: #000;
-  --bs-table-hover-bg: #dfe7dc;
+  --bs-table-hover-bg: #d3ddd6;
   --bs-table-hover-color: #000;
   color: var(--bs-table-color);
   border-color: var(--bs-table-border-color);
@@ -3064,19 +3064,19 @@ textarea.form-control-lg {
 
 .btn-light {
   --bs-btn-color: #000;
-  --bs-btn-bg: #f1faee;
-  --bs-btn-border-color: #f1faee;
+  --bs-btn-bg: #E4EFE7;
+  --bs-btn-border-color: #E4EFE7;
   --bs-btn-hover-color: #000;
-  --bs-btn-hover-bg: #cdd5ca;
-  --bs-btn-hover-border-color: #c1c8be;
-  --bs-btn-focus-shadow-rgb: 205, 213, 202;
+  --bs-btn-hover-bg: #c2cbc4;
+  --bs-btn-hover-border-color: #b6bfb9;
+  --bs-btn-focus-shadow-rgb: 194, 203, 196;
   --bs-btn-active-color: #000;
-  --bs-btn-active-bg: #c1c8be;
-  --bs-btn-active-border-color: #b5bcb3;
+  --bs-btn-active-bg: #b6bfb9;
+  --bs-btn-active-border-color: #abb3ad;
   --bs-btn-active-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
   --bs-btn-disabled-color: #000;
-  --bs-btn-disabled-bg: #f1faee;
-  --bs-btn-disabled-border-color: #f1faee;
+  --bs-btn-disabled-bg: #E4EFE7;
+  --bs-btn-disabled-border-color: #E4EFE7;
 }
 
 .btn-dark {
@@ -3199,19 +3199,19 @@ textarea.form-control-lg {
 }
 
 .btn-outline-light {
-  --bs-btn-color: #f1faee;
-  --bs-btn-border-color: #f1faee;
+  --bs-btn-color: #E4EFE7;
+  --bs-btn-border-color: #E4EFE7;
   --bs-btn-hover-color: #000;
-  --bs-btn-hover-bg: #f1faee;
-  --bs-btn-hover-border-color: #f1faee;
-  --bs-btn-focus-shadow-rgb: 241, 250, 238;
+  --bs-btn-hover-bg: #E4EFE7;
+  --bs-btn-hover-border-color: #E4EFE7;
+  --bs-btn-focus-shadow-rgb: 228, 239, 231;
   --bs-btn-active-color: #000;
-  --bs-btn-active-bg: #f1faee;
-  --bs-btn-active-border-color: #f1faee;
+  --bs-btn-active-bg: #E4EFE7;
+  --bs-btn-active-border-color: #E4EFE7;
   --bs-btn-active-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
-  --bs-btn-disabled-color: #f1faee;
+  --bs-btn-disabled-color: #E4EFE7;
   --bs-btn-disabled-bg: transparent;
-  --bs-btn-disabled-border-color: #f1faee;
+  --bs-btn-disabled-border-color: #E4EFE7;
   --bs-gradient: none;
 }
 
@@ -6796,7 +6796,7 @@ textarea.form-control-lg {
 
 .text-bg-light {
   color: #000 !important;
-  background-color: RGBA(241, 250, 238, var(--bs-bg-opacity, 1)) !important;
+  background-color: RGBA(228, 239, 231, var(--bs-bg-opacity, 1)) !important;
 }
 
 .text-bg-dark {
@@ -6863,8 +6863,8 @@ textarea.form-control-lg {
   text-decoration-color: RGBA(var(--bs-light-rgb), var(--bs-link-underline-opacity, 1)) !important;
 }
 .link-light:hover, .link-light:focus {
-  color: RGBA(244, 251, 241, var(--bs-link-opacity, 1)) !important;
-  text-decoration-color: RGBA(244, 251, 241, var(--bs-link-underline-opacity, 1)) !important;
+  color: RGBA(233, 242, 236, var(--bs-link-opacity, 1)) !important;
+  text-decoration-color: RGBA(233, 242, 236, var(--bs-link-underline-opacity, 1)) !important;
 }
 
 .link-dark {
@@ -11867,16 +11867,38 @@ textarea.form-control-lg {
 }
 
 .body-bg {
-  background: linear-gradient(to top left, #212529, #133339, #191c1f), radial-gradient(circle, #315d36, transparent);
-  background-blend-mode: overlay;
+  overflow: hidden;
+}
+
+.body-bg::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: url("/src/assets/Images/bg.jpg");
+  background-size: cover;
+  background-position: center;
+  filter: blur(12px);
+  z-index: -1;
 }
 
 #main-body {
   min-height: 100vh !important;
 }
 
+.login-signup {
+  position: relative;
+  min-height: auto;
+  overflow: hidden;
+  margin-top: 12.5vh;
+  padding-left: 15px;
+  padding-right: 15px;
+}
+
 .login-size {
-  max-width: 300px;
+  max-width: 400px;
   margin: 0 auto 15px auto;
 }
 
