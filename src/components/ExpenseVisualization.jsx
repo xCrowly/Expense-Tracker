@@ -70,33 +70,59 @@ function ExpenseVisualization() {
   };
 
   // Process data for category visualization
+  // Process data for category visualization
   const processCategoryData = () => {
     const categoryData = {};
+    let totalExpenses = 0;
 
+    // First, calculate total expenses and individual category totals
     data.forEach((entry) => {
       const category = entry.note || "Uncategorized";
       if (!categoryData[category]) {
         categoryData[category] = 0;
       }
       categoryData[category] += parseInt(entry.cash);
+      totalExpenses += parseInt(entry.cash);
     });
 
-    const categories = Object.keys(categoryData);
+    // Determine which categories are less than 5% of total
+    const threshold = totalExpenses * 0.01;
+    const mainCategories = {};
+    let othersTotal = 0;
+
+    // Separate main categories and small ones (less than 5%)
+    Object.entries(categoryData).forEach(([category, amount]) => {
+      if (amount >= threshold) {
+        mainCategories[category] = amount;
+      } else {
+        othersTotal += amount;
+      }
+    });
+
+    // Add "Others" category if there are any small categories
+    if (othersTotal > 0) {
+      mainCategories["Others"] = othersTotal;
+    }
+
+    const categories = Object.keys(mainCategories);
 
     // Generate random colors for each category
-    const backgroundColors = categories.map(
-      () =>
-        `rgba(${Math.floor(Math.random() * 200)}, ${Math.floor(
-          Math.random() * 200
-        )}, ${Math.floor(Math.random() * 200)}, 0.6)`
-    );
+    const backgroundColors = categories.map((category) => {
+      // Give "Others" category a consistent gray color if it exists
+      if (category === "Others") {
+        return "rgba(150, 150, 150, 0.6)";
+      }
+      return `rgba(${Math.floor(Math.random() * 200)}, ${Math.floor(
+        Math.random() * 200
+      )}, ${Math.floor(Math.random() * 200)}, 0.6)`;
+    });
 
     return {
       labels: categories,
       datasets: [
         {
           label: "Expenses by Category",
-          data: categories.map((category) => categoryData[category]),
+          data: categories.map((category) => mainCategories[category]),
           backgroundColor: backgroundColors,
           borderColor: backgroundColors.map((color) =>
             color.replace("0.6", "1")

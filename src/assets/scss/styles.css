@@ -11882,7 +11882,7 @@ textarea.form-control-lg {
   background: url("/src/assets/Images/bg.jpg");
   background-size: cover;
   background-position: center;
-  filter: blur(12px);
+  filter: blur(3px);
   z-index: -1;
 }
 
@@ -11921,8 +11921,8 @@ textarea.form-control-lg {
 
 .history-size {
   max-width: 768px;
-  margin: 15px auto;
-  padding: 0px 15px 45px 15px;
+  margin: 30px auto;
+  padding: 0px 30px 45px 30px;
 }
 
 .acc-style {

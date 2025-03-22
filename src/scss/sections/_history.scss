@@ -1,38 +1,37 @@
 @use "../custom";
 
 .history-size {
-    max-width: 768px;
-    margin: 15px auto;
-    padding: 0px 15px 45px 15px;
+  max-width: 768px;
+  margin: 30px auto;
+  padding: 0px 30px 45px 30px;
 }
 
 .acc-style {
-    background-color: white !important;
-    padding: 0 !important;
+  background-color: white !important;
+  padding: 0 !important;
 }
 
 .acc-body {
-    background-color: white !important;
-    padding: 1px !important;
+  background-color: white !important;
+  padding: 1px !important;
 }
 
 .acc-btn {
-    background-color: var(--bs-danger) !important;
-    color: var(--bs-white) !important;
-    text-align: center;
+  background-color: var(--bs-danger) !important;
+  color: var(--bs-white) !important;
+  text-align: center;
 
-    &:hover {
-        background-color: brown !important;
-    }
+  &:hover {
+    background-color: brown !important;
+  }
 
-    cursor: pointer;
+  cursor: pointer;
 }
 
 .acc-table {
-    margin: 0 !important;
-
+  margin: 0 !important;
 }
 
 #acc-body1 {
-    padding-bottom: 70px;
+  padding-bottom: 70px;
 }
