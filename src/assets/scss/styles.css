@@ -11905,7 +11905,7 @@ textarea.form-control-lg {
 }
 
 .form-size {
-  max-width: 400px;
+  max-width: 600px;
   margin: 0 1.5rem;
   padding: 15px;
 }
@@ -11913,7 +11913,7 @@ textarea.form-control-lg {
 #form-body {
   min-height: 100% !important;
   padding-bottom: 70px;
-  max-width: 400px;
+  max-width: 600px;
   margin: auto;
 }
 
