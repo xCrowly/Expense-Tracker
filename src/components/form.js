@@ -91,15 +91,15 @@ function FormBody() {
   );
 
   return (
-    <div id="form-body" className="px-3 mb-5">
-      <div className=" d-flex justify-content-center align-content-center row">
+    <div id="form-body" className="mb-5">
+      <div className="d-flex justify-content-center align-content-center row mx-0">
         <div className="row align-content-center justify-content-center w-auto text-white fs-4">
           <b>
             Hello, <i>{getName()}</i>
           </b>
         </div>
-        <div className="row align-content-center justify-content-center my-4">
-          <div className="col-md-6">
+        <div className="row align-items-around justify-content-center my-4">
+          <div className="col">
             <div className="card bg-success text-white">
               <div className="card-body">
                 <h5 className="card-title">This Month's Expenses</h5>

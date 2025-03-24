@@ -11906,13 +11906,15 @@ textarea.form-control-lg {
 
 .form-size {
   max-width: 400px;
-  margin: 0 auto;
+  margin: 0 1.5rem;
   padding: 15px;
 }
 
 #form-body {
   min-height: 100% !important;
   padding-bottom: 70px;
+  max-width: 400px;
+  margin: auto;
 }
 
 .history-size {
