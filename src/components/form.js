@@ -71,6 +71,19 @@ function FormBody() {
     }
   };
 
+  // Get current month's expenses
+  const getCurrentMonthExpenses = () => {
+    if (localStorage.getItem("data")) {
+      const data = Object.entries(JSON.parse(localStorage.getItem("data")));
+      const currentMonth = new Date().toISOString().substring(0, 7);
+
+      return data
+        .filter(([_, entry]) => entry.date.startsWith(currentMonth))
+        .reduce((total, [_, entry]) => total + parseInt(entry.cash), 0);
+    }
+    return 0;
+  };
+
   const errorMessage = () => (
     <div className="error" style={{ display: error ? "" : "none" }}>
       <h4>Please enter cash</h4>
@@ -79,15 +92,25 @@ function FormBody() {
 
   return (
     <div id="form-body" className="px-3 mb-5">
-      <div className="pb-3">
-        <div className="d-flex justify-content-center text-white fs-4">
+      <div className=" d-flex justify-content-center align-content-center row">
+        <div className="row align-content-center justify-content-center w-auto text-white fs-4">
           <b>
             Hello, <i>{getName()}</i>
           </b>
         </div>
+        <div className="row align-content-center justify-content-center my-4">
+          <div className="col-md-6">
+            <div className="card bg-success text-white">
+              <div className="card-body">
+                <h5 className="card-title">This Month's Expenses</h5>
+                <h2 className="card-text">${getCurrentMonthExpenses()}</h2>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
 
-      <div className="form-size bg-light rounded-1 shadow rounded-4">
+      <div className="form-size bg-light shadow rounded-2">
         <Form onSubmit={handleSubmit}>
           <Form.Label>Expenses</Form.Label>
           <div className="messages text-danger">{errorMessage()}</div>
@@ -161,35 +184,38 @@ function FormBody() {
           </div>
 
           <br />
-          <div className=" d-flex justify-content-around align-content-center flex-wrap">
-            <Button
-              variant="danger"
-              type="submit"
-              className="m-1 text-white"
-              disabled={loading}
-            >
-              {loading ? "Submitting..." : "Submit"}
-            </Button>
-            <Button
-              variant="dark"
-              onClick={() => setShowSettings(true)}
-              className="m-1"
-            >
-              Settings
-            </Button>
-
-            <Link
-              to="/history"
-              className="btn bg-success text-white button m-1"
-            >
-              History
-            </Link>
-            <Link
-              to="/dashboard"
-              className="btn bg-primary text-white button m-1 "
-            >
-              Dashboard
-            </Link>
+          <div className=" d-flex justify-content-center align-items-center flex-shrink-1">
+            <div className="row m-0">
+              <Button
+                variant="danger"
+                type="submit"
+                className="m-1 text-white w-auto col"
+                disabled={loading}
+              >
+                {loading ? "Submitting..." : "Submit"}
+              </Button>
+              <Button
+                variant="dark"
+                onClick={() => setShowSettings(true)}
+                className="m-1 w-auto col"
+              >
+                Settings
+              </Button>
+            </div>
+            <div className="row m-0">
+              <Link
+                to="/history"
+                className="btn bg-success text-white button m-1 w-auto col"
+              >
+                History
+              </Link>
+              <Link
+                to="/dashboard"
+                className="btn bg-primary text-white button m-1 w-auto col"
+              >
+                Dashboard
+              </Link>
+            </div>
           </div>
         </Form>
         {/* Settings Modal */}
