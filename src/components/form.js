@@ -184,24 +184,7 @@ function FormBody() {
           </div>
 
           <br />
-          <div className=" d-flex justify-content-center align-items-center flex-shrink-1">
-            <div className="row m-0">
-              <Button
-                variant="danger"
-                type="submit"
-                className="m-1 text-white w-auto col"
-                disabled={loading}
-              >
-                {loading ? "Submitting..." : "Submit"}
-              </Button>
-              <Button
-                variant="dark"
-                onClick={() => setShowSettings(true)}
-                className="m-1 w-auto col"
-              >
-                Settings
-              </Button>
-            </div>
+          <div className=" d-flex justify-content-between align-items-center flex-shrink-1">
             <div className="row m-0">
               <Link
                 to="/history"
@@ -215,6 +198,23 @@ function FormBody() {
               >
                 Dashboard
               </Link>
+            </div>
+            <div className="row m-0">
+              <Button
+                variant="dark"
+                onClick={() => setShowSettings(true)}
+                className="m-1 w-auto col"
+              >
+                Settings
+              </Button>
+              <Button
+                variant="danger"
+                type="submit"
+                className="m-1 text-white w-auto col"
+                disabled={loading}
+              >
+                {loading ? "Submitting..." : "Submit"}
+              </Button>
             </div>
           </div>
         </Form>
