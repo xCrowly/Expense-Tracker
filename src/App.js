@@ -2,11 +2,11 @@ import React from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Error from "./components/Error";
 import Footer from "./components/footer";
-import FormBody from "./components/form";
+import HomePageForm from "./components/home";
 import History from "./components/history";
 import NavBar from "./components/navbar";
 import SignupPage from "./components/signup-login";
-import Dashboard from "./components/Dashboard"; // Import the new Dashboard component
+import Dashboard from "./components/Dashboard";
 
 function App() {
   return (
@@ -28,7 +28,7 @@ function App() {
           path="/home"
           element={
             <div>
-              <FormBody />
+              <HomePageForm />
               <Footer />
             </div>
           }

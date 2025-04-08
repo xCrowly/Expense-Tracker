@@ -4,7 +4,7 @@ function Footer() {
   return (
     <footer id="my-footer">
       <div className="footer-text">
-        <div>
+        <div rel="preload">
           This website is made with{" "}
           <strong>
             HTML, CSS, JavaScript, Bootstrap, Sass, React, React Router,

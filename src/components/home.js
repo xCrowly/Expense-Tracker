@@ -7,7 +7,7 @@ import addUserData from "./firebase/addUserData";
 import getUserData from "./firebase/getUserData";
 import SettingsModal from "./SettingsModal"; // Import the SettingsModal component
 
-function FormBody() {
+function HomePageForm() {
   const [cash, setCash] = useState("");
   const [date, setDate] = useState(new Date().toISOString().substring(0, 10));
   const [note, setNote] = useState("");
@@ -232,4 +232,4 @@ function FormBody() {
   );
 }
 
-export default FormBody;
+export default HomePageForm;
