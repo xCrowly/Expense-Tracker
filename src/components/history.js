@@ -75,7 +75,7 @@ function History() {
   const renderMonthAccordion = (month, entries, total) => (
     <Accordion.Item key={month} eventKey={month}>
       <Accordion.Header>
-        <div className="d-flex justify-content-between w-100">
+        <div className="d-flex justify-content-between w-100 fw-bold">
           <span>{month}</span>
           <span className="text-success fw-bold mx-2">Total: ${total}</span>
         </div>
@@ -84,20 +84,23 @@ function History() {
         <Table className="acc-table" striped bordered hover>
           <thead>
             <tr>
-              <th className="text-success">Amount</th>
-              <th>Note</th>
-              <th>Day</th>
+              <th className="fw-bold">Day</th>
+              <th className="fw-bold">Note</th>
+              <th className="text-success fw-bold">Amount</th>
               <th className="text-danger"></th>
             </tr>
           </thead>
           <tbody>
             {entries.map(({ key, cash, note, date }) => (
               <tr key={key} id={key}>
-                <td>{cash}</td>
+                <td className="fw-bold">{date.substr(8)}</td>
                 <td>{note}</td>
-                <td>{date.substr(8)}</td>
+                <td className=" fw-bold">
+                  <span className="text-success m-0 p-0">$</span>
+                  {cash}
+                </td>
                 <td
-                  className="acc-btn"
+                  className="acc-btn fw-bold"
                   onClick={() => !loading && handleRemove(key)}
                   role="button"
                   aria-label="Delete entry"
@@ -114,8 +117,8 @@ function History() {
               </tr>
             ))}
             <tr>
-              <td className="bg-success text-white">Total</td>
-              <td className="bg-primary text-white">${total}</td>
+              <td className="bg-success text-white fw-bold">Total</td>
+              <td className="bg-primary text-white fw-bold">${total}</td>
             </tr>
           </tbody>
         </Table>

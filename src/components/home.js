@@ -42,7 +42,7 @@ function HomePageForm() {
     }
   }, []);
 
-  const getName = () => {
+  function getName () {
     const email = localStorage.getItem("email");
     return email ? email.split("@")[0] : "";
   };
@@ -95,14 +95,14 @@ function HomePageForm() {
       <div className="d-flex justify-content-center align-content-center row mx-0">
         <div className="row align-content-center justify-content-center w-auto text-white fs-4">
           <b>
-            Hello, <i>{getName()}</i>
+            Welcome, <i>{getName()}</i>
           </b>
         </div>
         <div className="row align-items-around justify-content-center my-4">
           <div className="col">
             <div className="card bg-success text-white">
               <div className="card-body">
-                <h5 className="card-title">This Month's Expenses</h5>
+                <h5 className="card-title fw-bold">This Month's Expenses</h5>
                 <h2 className="card-text">${getCurrentMonthExpenses()}</h2>
               </div>
             </div>
@@ -112,7 +112,7 @@ function HomePageForm() {
 
       <div className="form-size bg-light shadow rounded-2">
         <Form onSubmit={handleSubmit}>
-          <Form.Label>Expenses</Form.Label>
+          <Form.Label className="fw-bold">Expenses</Form.Label>
           <div className="messages text-danger">{errorMessage()}</div>
           <InputGroup>
             <InputGroup.Text className="bg-success text-white">
@@ -130,7 +130,7 @@ function HomePageForm() {
 
           {/* Cash Buttons */}
           <div className="mb-3">
-            <p className="mb-2">Quick Cash:</p>
+            <p className="mb-2 fw-bold">Quick Cash:</p>
             <div className="d-flex flex-wrap justify-content-start gap-2">
               {cashValues.map((amount) => (
                 <Button
@@ -144,7 +144,7 @@ function HomePageForm() {
             </div>
           </div>
 
-          <label htmlFor="date" className="ms-3">
+          <label htmlFor="date" className="ms-3 fw-bold">
             Date:{" "}
           </label>
           <input
@@ -157,7 +157,7 @@ function HomePageForm() {
           />
 
           <InputGroup>
-            <InputGroup.Text id="Note" className="bg-warning text-dark">
+            <InputGroup.Text id="Note" className="bg-warning text-dark fw-bold">
               Note
             </InputGroup.Text>
             <Form.Control
@@ -169,7 +169,7 @@ function HomePageForm() {
 
           {/* Quick Notes Buttons */}
           <div className="mb-3">
-            <p className="mb-2">Quick Notes:</p>
+            <p className="mb-2 fw-bold">Quick Notes:</p>
             <div className="d-flex flex-wrap d-flex flex-wrap justify-content-start gap-2">
               {quickNotes.map((text) => (
                 <Button
