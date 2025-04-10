@@ -84,9 +84,9 @@ function History() {
         <Table className="acc-table" striped bordered hover>
           <thead>
             <tr>
-              <th className="fw-bold">Day</th>
-              <th className="fw-bold">Note</th>
-              <th className="text-success fw-bold">Amount</th>
+              <th className="fw-bold bg-info">Day</th>
+              <th className="fw-bold bg-info">Note</th>
+              <th className="text-white fw-bold bg-success">Amount</th>
               <th className="text-danger"></th>
             </tr>
           </thead>
@@ -117,8 +117,11 @@ function History() {
               </tr>
             ))}
             <tr>
-              <td className="bg-success text-white fw-bold">Total</td>
-              <td className="bg-primary text-white fw-bold">${total}</td>
+              <td className=""></td>
+              <td className="bg-info text-text-black fw-bold">Total</td>
+              <td className="bg-success  text-white fw-bold">
+                ${total}
+              </td>
             </tr>
           </tbody>
         </Table>
