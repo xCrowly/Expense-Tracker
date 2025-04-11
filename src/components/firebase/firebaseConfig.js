@@ -7,14 +7,13 @@ import { getDatabase } from "firebase/database";
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
-  apiKey: "AIzaSyBR6aiIYUwDLuBtDeTI1A5_krxYPOLB6iM",
-  authDomain: "expanse-tracker-e6806.firebaseapp.com",
-  databaseURL:
-    "https://expanse-tracker-e6806-default-rtdb.europe-west1.firebasedatabase.app",
-  projectId: "expanse-tracker-e6806",
-  storageBucket: "expanse-tracker-e6806.appspot.com",
-  messagingSenderId: "1054083508897",
-  appId: "1:1054083508897:web:e39a246e81fccbccee1ee0",
+  apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
+  authDomain: process.env.REACT_APP_FIREBASE_AUTH_DOMAIN,
+  databaseURL: process.env.REACT_APP_FIREBASE_DATABASE_URL,
+  projectId: process.env.REACT_APP_FIREBASE_PROJECT_ID,
+  storageBucket: process.env.REACT_APP_FIREBASE_STORAGE_BUCKET,
+  messagingSenderId: process.env.REACT_APP_FIREBASE_MESSAGING_SENDER_ID,
+  appId: process.env.REACT_APP_FIREBASE_APP_ID
 };
 
 // Initialize Firebase
