@@ -25,6 +25,7 @@ function NavBar() {
     localStorage.removeItem("email");
     localStorage.removeItem("token");
     localStorage.removeItem("data");
+    localStorage.removeItem("targetSpending");
     window.location.href = "/";
   }
 

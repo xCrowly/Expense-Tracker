@@ -1,9 +1,34 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Button, Form, Modal } from "react-bootstrap";
+import { saveMonthlyTarget, getMonthlyTarget } from "./firebase/addMonthlyTarget";
 
-function SettingsModal({ show, handleClose, cashValues, setCashValues, quickNotes, setQuickNotes }) {
+function SettingsModal({ show, handleClose, cashValues, setCashValues, quickNotes, setQuickNotes, onTargetUpdate }) {
     const [newCashValue, setNewCashValue] = useState("");
     const [newQuickNote, setNewQuickNote] = useState("");
+    const [targetSpending, setTargetSpending] = useState("");
+    const [savingTarget, setSavingTarget] = useState(false);
+
+    useEffect(() => {
+        const fetchMonthlyTarget = async () => {
+            try {
+                const userId = localStorage.getItem("id");
+                const target = await getMonthlyTarget(userId);
+                setTargetSpending(target);
+                onTargetUpdate(target);
+                localStorage.setItem("targetSpending", target);
+            } catch (error) {
+                console.error("Error fetching monthly target:", error);
+                // Fallback to localStorage
+                const savedTarget = localStorage.getItem("targetSpending") || "0";
+                setTargetSpending(savedTarget);
+                onTargetUpdate(savedTarget);
+            }
+        };
+
+        if (show) {
+            fetchMonthlyTarget();
+        }
+    }, [show, onTargetUpdate]);
 
     // Add a new cash value
     const addCashValue = () => {
@@ -39,12 +64,59 @@ function SettingsModal({ show, handleClose, cashValues, setCashValues, quickNote
         localStorage.setItem("quickNotes", JSON.stringify(updatedQuickNotes));
     };
 
+    // Update target spending temporarily
+    const updateTargetSpending = (value) => {
+        if (value >= 0) {
+            setTargetSpending(value);
+        }
+    };
+
+    // Save target spending to Firebase
+    const saveTargetSpending = async () => {
+        if (targetSpending >= 0) {
+            setSavingTarget(true);
+            try {
+                const userId = localStorage.getItem("id");
+                await saveMonthlyTarget(userId, targetSpending);
+                localStorage.setItem("targetSpending", targetSpending);
+                onTargetUpdate(targetSpending);
+            } catch (error) {
+                console.error("Error saving target:", error);
+                alert("Failed to save target. Please try again.");
+            } finally {
+                setSavingTarget(false);
+            }
+        }
+    };
+
     return (
         <Modal show={show} onHide={handleClose}>
             <Modal.Header closeButton>
                 <Modal.Title>Settings</Modal.Title>
             </Modal.Header>
             <Modal.Body>
+                {/* Target Spending Section */}
+                <h5>Monthly Target Spending</h5>
+                <div className="mb-4">
+                    <div className="d-flex gap-2">
+                        <Form.Control
+                            type="number"
+                            placeholder="Enter your monthly target spending"
+                            value={targetSpending}
+                            onChange={(e) => updateTargetSpending(e.target.value)}
+                            min="0"
+                        />
+                        <Button 
+                            variant="success" 
+                            onClick={saveTargetSpending}
+                            disabled={savingTarget}
+                        >
+                            {savingTarget ? "Saving..." : "Save Target"}
+                        </Button>
+                    </div>
+                    <small className="text-muted">Set your monthly spending target to help track your expenses</small>
+                </div>
+
                 {/* Cash Values Section */}
                 <h5>Cash Values</h5>
                 <div className="mb-3">

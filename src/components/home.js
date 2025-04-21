@@ -5,6 +5,7 @@ import InputGroup from "react-bootstrap/InputGroup";
 import { Link } from "react-router-dom";
 import addUserData from "./firebase/addUserData";
 import getUserData from "./firebase/getUserData";
+import { getMonthlyTarget } from "./firebase/addMonthlyTarget";
 import SettingsModal from "./SettingsModal"; // Import the SettingsModal component
 
 function HomePageForm() {
@@ -14,10 +15,30 @@ function HomePageForm() {
   const [error, setError] = useState(false);
   const [loading, setLoading] = useState(false);
   const [showSettings, setShowSettings] = useState(false);
+  const [targetSpending, setTargetSpending] = useState("0");
 
   // Load saved values from localStorage
   const [cashValues, setCashValues] = useState([]);
   const [quickNotes, setQuickNotes] = useState([]);
+
+  // Fetch target spending on component mount
+  useEffect(() => {
+    const fetchTarget = async () => {
+      try {
+        const userId = localStorage.getItem("id");
+        if (userId) {
+          const target = await getMonthlyTarget(userId);
+          setTargetSpending(target);
+          localStorage.setItem("targetSpending", target);
+        }
+      } catch (error) {
+        console.error("Error fetching target:", error);
+        // Fallback to localStorage
+        setTargetSpending(localStorage.getItem("targetSpending") || "0");
+      }
+    };
+    fetchTarget();
+  }, []);
 
   useEffect(() => {
     const savedCashValues = JSON.parse(localStorage.getItem("cashValues")) || [
@@ -99,11 +120,45 @@ function HomePageForm() {
           </b>
         </div>
         <div className="row align-items-around justify-content-center my-4">
-          <div className="col">
-            <div className="card bg-success text-white">
+          <div className="col h-100">
+            <div className="card bg-success text-white h-100">
               <div className="card-body">
                 <h5 className="card-title fw-bold">This Month's Expenses</h5>
                 <h2 className="card-text">${getCurrentMonthExpenses()}</h2>
+              </div>
+            </div>
+          </div>
+          <div className="col h-100">
+            <div className="card bg-primary text-white h-100">
+              <div className="card-body">
+                <h5 className="card-title fw-bold">Monthly Target</h5>
+                <h2 className="card-text">
+                  ${targetSpending}
+                </h2>
+                <div className="progress bg-light">
+                  <div
+                    className="progress-bar"
+                    role="progressbar"
+                    style={{
+                      width: `${Math.min((getCurrentMonthExpenses() / (parseInt(targetSpending) || 1)) * 100, 100)}%`,
+                      backgroundColor: (() => {
+                        const percentage = (getCurrentMonthExpenses() / (parseInt(targetSpending) || 1)) * 100;
+                        if (percentage <= 50) return '#28a745'; // green
+                        if (percentage <= 75) return '#ffc107'; // yellow
+                        if (percentage <= 90) return '#fd7e14'; // orange
+                        return '#dc3545'; // red
+                      })()
+                    }}
+                    aria-valuenow={getCurrentMonthExpenses()}
+                    aria-valuemin="0"
+                    aria-valuemax={parseInt(targetSpending) || 100}
+                  ></div>
+                </div>
+                <small>
+                  {getCurrentMonthExpenses() > (parseInt(targetSpending) || 0)
+                    ? "Over budget!"
+                    : `${Math.round((getCurrentMonthExpenses() / (parseInt(targetSpending) || 1)) * 100)}% of target`}
+                </small>
               </div>
             </div>
           </div>
@@ -226,6 +281,7 @@ function HomePageForm() {
           setCashValues={setCashValues}
           quickNotes={quickNotes}
           setQuickNotes={setQuickNotes}
+          onTargetUpdate={(newTarget) => setTargetSpending(newTarget)}
         />
       </div>
     </div>
