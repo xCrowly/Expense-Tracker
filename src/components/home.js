@@ -7,6 +7,8 @@ import addUserData from "./firebase/addUserData";
 import getUserData from "./firebase/getUserData";
 import { getMonthlyTarget } from "./firebase/addMonthlyTarget";
 import SettingsModal from "./SettingsModal"; // Import the SettingsModal component
+import { useLanguage } from "../context/LanguageContext";
+import { translations } from "../translations";
 
 function HomePageForm() {
   const [cash, setCash] = useState("");
@@ -16,10 +18,13 @@ function HomePageForm() {
   const [loading, setLoading] = useState(false);
   const [showSettings, setShowSettings] = useState(false);
   const [targetSpending, setTargetSpending] = useState("0");
+  const { language } = useLanguage();
 
   // Load saved values from localStorage
   const [cashValues, setCashValues] = useState([]);
   const [quickNotes, setQuickNotes] = useState([]);
+
+  const t = (key) => translations[language][key] || key;
 
   // Fetch target spending on component mount
   useEffect(() => {
@@ -45,16 +50,16 @@ function HomePageForm() {
       1, 2, 5, 10, 20, 50,
     ];
     const savedQuickNotes = JSON.parse(localStorage.getItem("quickNotes")) || [
-      "Groceries",
-      "Transport",
-      "Entertainment",
-      "Utilities",
-      "Rent",
-      "Shopping",
+      t("groceries"),
+      t("transport"),
+      t("entertainment"),
+      t("utilities"),
+      t("rent"),
+      t("shopping"),
     ];
     setCashValues(savedCashValues);
     setQuickNotes(savedQuickNotes);
-  }, []);
+  }, [language]); // Re-run when language changes
 
   useEffect(() => {
     const token = localStorage.getItem("token");
@@ -62,11 +67,6 @@ function HomePageForm() {
       window.location.href = "/";
     }
   }, []);
-
-  function getName () {
-    const email = localStorage.getItem("email");
-    return email ? email.split("@")[0] : "";
-  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -99,66 +99,92 @@ function HomePageForm() {
       const currentMonth = new Date().toISOString().substring(0, 7);
 
       return data
-        .filter(([_, entry]) => entry.date.startsWith(currentMonth))
+        .filter(
+          ([_, entry]) => !entry.isTarget && entry.date.startsWith(currentMonth)
+        )
         .reduce((total, [_, entry]) => total + parseInt(entry.cash), 0);
     }
     return 0;
   };
 
+  const getRemainingAmount = () => {
+    const currentExpenses = getCurrentMonthExpenses();
+    const target = parseInt(targetSpending) || 0;
+    const remaining = target - currentExpenses;
+    return remaining;
+  };
+
   const errorMessage = () => (
     <div className="error" style={{ display: error ? "" : "none" }}>
-      <h4>Please enter cash</h4>
+      <h4>{t("pleaseEnterCash")}</h4>
     </div>
   );
 
   return (
     <div id="form-body" className="mb-5">
       <div className="d-flex justify-content-center align-content-center row mx-0">
-        <div className="row align-content-center justify-content-center w-auto text-white fs-4">
-          <b>
-            Welcome, <i>{getName()}</i>
-          </b>
-        </div>
         <div className="row align-items-around justify-content-center my-4">
           <div className="col h-100">
             <div className="card bg-success text-white h-100">
               <div className="card-body">
-                <h5 className="card-title fw-bold">This Month's Expenses</h5>
+                <h5 className="card-title fw-bold">{t("thisMonthExpenses")}</h5>
                 <h2 className="card-text">${getCurrentMonthExpenses()}</h2>
+                <div
+                  className={`small ${
+                    getRemainingAmount() >= 0 ? "text-success" : "text-danger"
+                  } bg-light rounded-2 p-1 mt-2`}
+                >
+                  {getRemainingAmount() >= 0
+                    ? t("remainingAmount")
+                    : t("overAmount")}
+                  : {Math.abs(getRemainingAmount())}
+                </div>
               </div>
             </div>
           </div>
           <div className="col h-100">
             <div className="card bg-primary text-white h-100">
               <div className="card-body">
-                <h5 className="card-title fw-bold">Monthly Target</h5>
-                <h2 className="card-text">
-                  ${targetSpending}
-                </h2>
+                <h5 className="card-title fw-bold">{t("monthlyTarget")}</h5>
+                <h2 className="card-text">${targetSpending}</h2>
                 <div className="progress bg-light">
                   <div
                     className="progress-bar"
                     role="progressbar"
                     style={{
-                      width: `${Math.min((getCurrentMonthExpenses() / (parseInt(targetSpending) || 1)) * 100, 100)}%`,
+                      width: `${Math.min(
+                        (getCurrentMonthExpenses() /
+                          (parseInt(targetSpending) || 1)) *
+                          100,
+                        100
+                      )}%`,
                       backgroundColor: (() => {
-                        const percentage = (getCurrentMonthExpenses() / (parseInt(targetSpending) || 1)) * 100;
-                        if (percentage <= 50) return '#28a745'; // green
-                        if (percentage <= 75) return '#ffc107'; // yellow
-                        if (percentage <= 90) return '#fd7e14'; // orange
-                        return '#dc3545'; // red
-                      })()
+                        const percentage =
+                          (getCurrentMonthExpenses() /
+                            (parseInt(targetSpending) || 1)) *
+                          100;
+                        if (percentage <= 50) return "#28a745";
+                        if (percentage <= 75) return "#ffc107";
+                        if (percentage <= 90) return "#fd7e14";
+                        return "#dc3545";
+                      })(),
                     }}
                     aria-valuenow={getCurrentMonthExpenses()}
                     aria-valuemin="0"
                     aria-valuemax={parseInt(targetSpending) || 100}
                   ></div>
                 </div>
-                <small>
-                  {getCurrentMonthExpenses() > (parseInt(targetSpending) || 0)
-                    ? "Over budget!"
-                    : `${Math.round((getCurrentMonthExpenses() / (parseInt(targetSpending) || 1)) * 100)}% of target`}
-                </small>
+                <div className="mt-2">
+                  <small>
+                    {getCurrentMonthExpenses() > (parseInt(targetSpending) || 0)
+                      ? t("overBudget")
+                      : `${Math.round(
+                          (getCurrentMonthExpenses() /
+                            (parseInt(targetSpending) || 1)) *
+                            100
+                        )}% ${t("ofTarget")}`}
+                  </small>
+                </div>
               </div>
             </div>
           </div>
@@ -167,7 +193,7 @@ function HomePageForm() {
 
       <div className="form-size bg-light shadow rounded-2">
         <Form onSubmit={handleSubmit}>
-          <Form.Label className="fw-bold">Expenses</Form.Label>
+          <Form.Label className="fw-bold">{t("expenses")}:</Form.Label>
           <div className="messages text-danger">{errorMessage()}</div>
           <InputGroup>
             <InputGroup.Text className="bg-success text-white">
@@ -185,7 +211,7 @@ function HomePageForm() {
 
           {/* Cash Buttons */}
           <div className="mb-3">
-            <p className="mb-2 fw-bold">Quick Cash:</p>
+            <p className="mb-2 fw-bold">{t("quickCash")}:</p>
             <div className="d-flex flex-wrap justify-content-start gap-2">
               {cashValues.map((amount) => (
                 <Button
@@ -200,7 +226,7 @@ function HomePageForm() {
           </div>
 
           <label htmlFor="date" className="ms-3 fw-bold">
-            Date:{" "}
+            {t("date")}:{" "}
           </label>
           <input
             value={date}
@@ -213,7 +239,7 @@ function HomePageForm() {
 
           <InputGroup>
             <InputGroup.Text id="Note" className="bg-warning text-dark fw-bold">
-              Note
+              {t("note")}
             </InputGroup.Text>
             <Form.Control
               value={note}
@@ -224,8 +250,8 @@ function HomePageForm() {
 
           {/* Quick Notes Buttons */}
           <div className="mb-3">
-            <p className="mb-2 fw-bold">Quick Notes:</p>
-            <div className="d-flex flex-wrap d-flex flex-wrap justify-content-start gap-2">
+            <p className="mb-2 fw-bold">{t("quickNotes")}:</p>
+            <div className="d-flex flex-wrap justify-content-start gap-2">
               {quickNotes.map((text) => (
                 <Button
                   key={text}
@@ -239,38 +265,36 @@ function HomePageForm() {
           </div>
 
           <br />
-          <div className=" d-flex justify-content-between align-items-center flex-shrink-1">
-            <div className="row m-0">
-              <Link
-                to="/history"
-                className="btn bg-success text-white button m-1 w-auto col"
-              >
-                History
-              </Link>
+          <div className="d-flex justify-content-between align-items-center flex-shrink-1 ">
+            {/* <div className="row m-0">
               <Link
                 to="/dashboard"
                 className="btn bg-primary text-white button m-1 w-auto col"
+                >
+                {t("dashboard")}
+                </Link>
+              <Link
+                to="/settings"
+                className="btn bg-secondary text-white m-1 w-auto col"
               >
-                Dashboard
+                {t("settings")}
               </Link>
-            </div>
-            <div className="row m-0">
-              <Button
-                variant="dark"
-                onClick={() => setShowSettings(true)}
-                className="m-1 w-auto col"
-              >
-                Settings
-              </Button>
-              <Button
-                variant="danger"
-                type="submit"
-                className="m-1 text-white w-auto col"
-                disabled={loading}
-              >
-                {loading ? "Submitting..." : "Submit"}
-              </Button>
-            </div>
+            </div> */}
+
+            <Link
+              to="/history"
+              className="btn bg-success text-white button m-1 w-auto col"
+            >
+              {t("history")}
+            </Link>
+            <Button
+              variant="danger"
+              type="submit"
+              className="m-1 text-white w-auto col"
+              disabled={loading}
+            >
+              {loading ? t("submitting") : t("submit")}
+            </Button>
           </div>
         </Form>
         {/* Settings Modal */}

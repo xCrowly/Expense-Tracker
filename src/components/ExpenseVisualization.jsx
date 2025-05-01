@@ -36,7 +36,11 @@ function ExpenseVisualization() {
     // Load data from localStorage
     if (localStorage.getItem("data")) {
       const rawData = Object.entries(JSON.parse(localStorage.getItem("data")));
-      setData(rawData.map(([key, entry]) => ({ id: key, ...entry })));
+      // Filter out target entries
+      const expensesOnly = rawData
+        .filter(([_, entry]) => !entry.isTarget)
+        .map(([key, entry]) => ({ id: key, ...entry }));
+      setData(expensesOnly);
     }
   }, []);
 
@@ -45,11 +49,14 @@ function ExpenseVisualization() {
     const monthlyData = {};
 
     data.forEach((entry) => {
-      const month = entry.date.substr(0, 7);
-      if (!monthlyData[month]) {
-        monthlyData[month] = 0;
+      if (!entry.isTarget) {
+        // Extra check for safety
+        const month = entry.date.substr(0, 7);
+        if (!monthlyData[month]) {
+          monthlyData[month] = 0;
+        }
+        monthlyData[month] += parseInt(entry.cash);
       }
-      monthlyData[month] += parseInt(entry.cash);
     });
 
     // Sort by month
@@ -70,19 +77,21 @@ function ExpenseVisualization() {
   };
 
   // Process data for category visualization
-  // Process data for category visualization
   const processCategoryData = () => {
     const categoryData = {};
     let totalExpenses = 0;
 
     // First, calculate total expenses and individual category totals
     data.forEach((entry) => {
-      const category = entry.note || "Uncategorized";
-      if (!categoryData[category]) {
-        categoryData[category] = 0;
+      if (!entry.isTarget) {
+        // Extra check for safety
+        const category = entry.note || "Uncategorized";
+        if (!categoryData[category]) {
+          categoryData[category] = 0;
+        }
+        categoryData[category] += parseInt(entry.cash);
+        totalExpenses += parseInt(entry.cash);
       }
-      categoryData[category] += parseInt(entry.cash);
-      totalExpenses += parseInt(entry.cash);
     });
 
     // Determine which categories are less than 5% of total
@@ -140,10 +149,13 @@ function ExpenseVisualization() {
     const categories = new Set();
 
     data.forEach((entry) => {
-      const month = entry.date.substr(0, 7);
-      const category = entry.note || "Uncategorized";
-      months.add(month);
-      categories.add(category);
+      if (!entry.isTarget) {
+        // Extra check for safety
+        const month = entry.date.substr(0, 7);
+        const category = entry.note || "Uncategorized";
+        months.add(month);
+        categories.add(category);
+      }
     });
 
     // Sort months chronologically
@@ -162,7 +174,7 @@ function ExpenseVisualization() {
 
       // Sum expenses for each month in this category
       data.forEach((entry) => {
-        if ((entry.note || "Uncategorized") === category) {
+        if (!entry.isTarget && (entry.note || "Uncategorized") === category) {
           const month = entry.date.substr(0, 7);
           monthlyData[month] += parseInt(entry.cash);
         }

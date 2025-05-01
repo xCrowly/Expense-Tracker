@@ -2,32 +2,58 @@ import React, { useEffect, useState } from "react";
 import Button from "react-bootstrap/Button";
 import Container from "react-bootstrap/Container";
 import Navbar from "react-bootstrap/Navbar";
-import { Link } from "react-router-dom";
-import { useLocation } from "react-router-dom";
+import Dropdown from "react-bootstrap/Dropdown";
+import { Link, useLocation, useNavigate } from "react-router-dom";
+import { useLanguage } from "../context/LanguageContext";
+import { translations } from "../translations";
+import {
+  Settings,
+  History,
+  LayoutDashboard,
+  LogOut,
+  Globe,
+} from "lucide-react";
 
 function NavBar() {
-  // check the current location of the userx
   const location = useLocation();
-
-  // check if the user has signed in in order to show these buttons
+  const navigate = useNavigate();
   const [homeBtnHide, sethomeBtnHide] = useState(true);
+  const { language, changeLanguage } = useLanguage();
 
-  // check if the user has signed in in order to show these buttons
   useEffect(() => {
     if (localStorage.getItem("token")) {
       return sethomeBtnHide(false);
     }
   }, [location.pathname]);
 
-  // delete user data from local storage
+  function getName() {
+    const email = localStorage.getItem("email");
+    return email ? email.split("@")[0] : "";
+  }
+
   function signOut() {
+    // Clear all authentication related items
     localStorage.removeItem("id");
     localStorage.removeItem("email");
     localStorage.removeItem("token");
     localStorage.removeItem("data");
     localStorage.removeItem("targetSpending");
+    
+    // Clear settings related items
+    localStorage.removeItem("cashValues");
+    localStorage.removeItem("quickNotes");
+    localStorage.removeItem("language");
+    
     window.location.href = "/";
   }
+
+  const t = (key) => translations[language][key] || key;
+
+  const toggleLanguage = () => {
+    const newLang = language === "en" ? "ar" : "en";
+    changeLanguage(newLang);
+    window.location.reload();
+  };
 
   return (
     <Navbar className="navbar-styling mb-3 p-3 shadow" sticky="top">
@@ -36,26 +62,63 @@ function NavBar() {
           className="nav-title me-0 text-primary fs-5 fw-bold text-decoration-none"
           to="/home"
         >
-          Expense Tracker
+          {t("expenseTracker")}
         </Link>
-        <div>
-          <Link
-            hidden={homeBtnHide ? true : false}
-            to="/home"
-            variant="secondary"
-            type="button"
-            className="btn home-btn bg-secondary text-white me-2 flex-shrink-0"
-          >
-            Home
-          </Link>
-          <Button
-            hidden={homeBtnHide ? true : false}
-            onClick={signOut}
-            variant="black"
-            className="home-btn  rounded-5"
-          >
-            Sign out
-          </Button>
+        <div className="d-flex align-items-center ">
+          {!homeBtnHide && (
+            <>
+              <Dropdown>
+                <Dropdown.Toggle
+                  variant="link"
+                  id="dropdown-basic"
+                  className="text-decoration-none text-secondary d-flex align-items-center gap-2"
+                >
+                  <i>{getName()}</i>
+                </Dropdown.Toggle>
+
+                <Dropdown.Menu>
+                  <Dropdown.Item
+                    onClick={() => navigate("/settings")}
+                    className="d-flex align-items-center gap-2"
+                  >
+                    <Settings size={16} />
+                    {t("settings")}
+                  </Dropdown.Item>
+                  <Dropdown.Item
+                    onClick={() => navigate("/history")}
+                    className="d-flex align-items-center gap-2"
+                  >
+                    <History size={16} />
+                    {t("history")}
+                  </Dropdown.Item>
+                  <Dropdown.Item
+                    onClick={() => navigate("/dashboard")}
+                    className="d-flex align-items-center gap-2"
+                  >
+                    <LayoutDashboard size={16} />
+                    {t("dashboard")}
+                  </Dropdown.Item>
+                  <Dropdown.Divider />
+                  <Dropdown.Item
+                    onClick={signOut}
+                    className="text-danger d-flex align-items-center gap-2"
+                  >
+                    <LogOut size={16} />
+                    {t("signOut")}
+                  </Dropdown.Item>
+                </Dropdown.Menu>
+              </Dropdown>
+              <Button
+                variant="outline-primary"
+                size="sm"
+                onClick={toggleLanguage}
+                className="me-3 d-flex align-items-center gap-2"
+              >
+                <Globe size={16} />
+                {language === "en" ? "العربية" : "English"}
+              </Button>
+            </>
+          )}
         </div>
       </Container>
     </Navbar>

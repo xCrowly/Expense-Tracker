@@ -7,9 +7,9 @@ export const saveMonthlyTarget = async (userId, targetAmount) => {
     // Store the target as a regular expense-like entry with required fields
     await set(ref(db, `users/${userId}/${Date.now()}`), {
       cash: parseInt(targetAmount),
-      date: new Date().toISOString().split('T')[0],
+      date: new Date().toISOString().split("T")[0],
       note: "Monthly Target Setting",
-      isTarget: true // This field helps identify it as a target setting
+      isTarget: true, // This field helps identify it as a target setting
     });
     console.log("Monthly target saved successfully");
     return true;
@@ -24,14 +24,17 @@ export const getMonthlyTarget = async (userId) => {
   try {
     const snapshot = await get(ref(db, `users/${userId}`));
     if (snapshot.exists()) {
-      // Find the most recent target setting
       const data = Object.entries(snapshot.val());
-      const targetEntry = data
-        .filter(([_, entry]) => entry.isTarget)
-        .sort((a, b) => b[0] - a[0])[0]; // Sort by key (timestamp) descending
 
-      if (targetEntry) {
-        return targetEntry[1].cash.toString();
+      // Filter target entries and sort by timestamp (key) in descending order
+      const targetEntries = data
+        .filter(([_, entry]) => entry.isTarget)
+        .sort((a, b) => parseInt(b[0]) - parseInt(a[0]));
+
+      // Get the most recent target entry
+      if (targetEntries.length > 0) {
+        const mostRecentTarget = targetEntries[0];
+        return mostRecentTarget[1].cash.toString();
       }
     }
     return "0"; // Default value if no target is set
@@ -39,4 +42,4 @@ export const getMonthlyTarget = async (userId) => {
     console.error("Error getting monthly target:", error);
     throw error;
   }
-}; 
+};

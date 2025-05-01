@@ -5,11 +5,9 @@ function Footer() {
     <footer id="my-footer">
       <div className="footer-text">
         <div rel="preload">
-          This website is made with{" "}
-          <strong>
-            HTML, CSS, JavaScript, Bootstrap, Sass, React, React Router,
-          </strong>{" "}
-          and <strong>Firebase</strong> (Authentication & Realtime Database).
+          This website is made with HTML, CSS, JavaScript, Bootstrap, Sass,
+          React, React Router, and Firebase (Authentication & Realtime
+          Database).
         </div>
         <a
           href="https://ahmedbadawy.netlify.app"
