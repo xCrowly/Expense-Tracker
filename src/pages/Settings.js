@@ -97,7 +97,7 @@ function Settings() {
   };
 
   return (
-    <Container className="py-4">
+    <Container className="pt-4 pb-5 mb-5">
       <h2 className="mb-4 text-white">{language === 'ar' ? 'الإعدادات' : 'Settings'}</h2>
       
       <Row className="g-4">

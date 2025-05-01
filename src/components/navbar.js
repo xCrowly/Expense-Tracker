@@ -12,6 +12,7 @@ import {
   LayoutDashboard,
   LogOut,
   Globe,
+  UserCog,
 } from "lucide-react";
 
 function NavBar() {
@@ -38,12 +39,12 @@ function NavBar() {
     localStorage.removeItem("token");
     localStorage.removeItem("data");
     localStorage.removeItem("targetSpending");
-    
+
     // Clear settings related items
     localStorage.removeItem("cashValues");
     localStorage.removeItem("quickNotes");
     localStorage.removeItem("language");
-    
+
     window.location.href = "/";
   }
 
@@ -73,6 +74,7 @@ function NavBar() {
                   id="dropdown-basic"
                   className="text-decoration-none text-secondary d-flex align-items-center gap-2"
                 >
+                  <UserCog size={20} className="text-success"/>
                   <i>{getName()}</i>
                 </Dropdown.Toggle>
 

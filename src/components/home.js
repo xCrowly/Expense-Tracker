@@ -9,7 +9,7 @@ import { getMonthlyTarget } from "./firebase/addMonthlyTarget";
 import SettingsModal from "./SettingsModal"; // Import the SettingsModal component
 import { useLanguage } from "../context/LanguageContext";
 import { translations } from "../translations";
-
+import { DollarSign, NotebookPen, History, CalendarDays, Save } from "lucide-react";
 function HomePageForm() {
   const [cash, setCash] = useState("");
   const [date, setDate] = useState(new Date().toISOString().substring(0, 10));
@@ -25,7 +25,10 @@ function HomePageForm() {
   const [quickNotes, setQuickNotes] = useState([]);
 
   // const t = (key) => translations[language][key] || key;
-  const t = useCallback((key) => translations[language][key] || key, [language]);
+  const t = useCallback(
+    (key) => translations[language][key] || key,
+    [language]
+  );
 
   // Fetch target spending on component mount
   useEffect(() => {
@@ -198,7 +201,7 @@ function HomePageForm() {
           <div className="messages text-danger">{errorMessage()}</div>
           <InputGroup>
             <InputGroup.Text className="bg-success text-white">
-              $
+              <DollarSign size={18} />
             </InputGroup.Text>
             <Form.Control
               value={cash}
@@ -211,7 +214,7 @@ function HomePageForm() {
           </InputGroup>
 
           {/* Cash Buttons */}
-          <div className="mb-3">
+          <div className="mb-1">
             <p className="mb-2 fw-bold">{t("quickCash")}:</p>
             <div className="d-flex flex-wrap justify-content-start gap-2">
               {cashValues.map((amount) => (
@@ -227,6 +230,7 @@ function HomePageForm() {
           </div>
 
           <label htmlFor="date" className="ms-3 fw-bold">
+            <CalendarDays className="me-2" size={28} />
             {t("date")}:{" "}
           </label>
           <input
@@ -235,11 +239,12 @@ function HomePageForm() {
             type="date"
             id="dateValue"
             name="date"
-            className="m-3"
+            className="m-3 p-1 w-max rounded-2 border-0 shadow-sm"
           />
 
           <InputGroup>
             <InputGroup.Text id="Note" className="bg-warning text-dark fw-bold">
+              <NotebookPen className="me-2" size={18} />
               {t("note")}
             </InputGroup.Text>
             <Form.Control
@@ -286,6 +291,7 @@ function HomePageForm() {
               to="/history"
               className="btn bg-success text-white button m-1 w-auto col"
             >
+              <History className="me-2" size={22} />
               {t("history")}
             </Link>
             <Button
@@ -294,6 +300,7 @@ function HomePageForm() {
               className="m-1 text-white w-auto col"
               disabled={loading}
             >
+              <Save className="me-2" size={22} />
               {loading ? t("submitting") : t("submit")}
             </Button>
           </div>
