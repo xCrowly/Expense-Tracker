@@ -1,4 +1,4 @@
-import { React, useEffect, useState } from "react";
+import { React, useEffect, useState, useCallback } from "react";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import InputGroup from "react-bootstrap/InputGroup";
@@ -24,7 +24,8 @@ function HomePageForm() {
   const [cashValues, setCashValues] = useState([]);
   const [quickNotes, setQuickNotes] = useState([]);
 
-  const t = (key) => translations[language][key] || key;
+  // const t = (key) => translations[language][key] || key;
+  const t = useCallback((key) => translations[language][key] || key, [language]);
 
   // Fetch target spending on component mount
   useEffect(() => {
@@ -59,7 +60,7 @@ function HomePageForm() {
     ];
     setCashValues(savedCashValues);
     setQuickNotes(savedQuickNotes);
-  }, [language]); // Re-run when language changes
+  }, [language, t]); // Re-run when language changes
 
   useEffect(() => {
     const token = localStorage.getItem("token");
