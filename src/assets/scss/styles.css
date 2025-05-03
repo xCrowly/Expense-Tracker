@@ -11886,20 +11886,24 @@ textarea.form-control-lg {
 }
 
 .login-size {
-  max-width: 400px;
+  max-width: 540px;
   margin: 0 auto 15px auto;
 }
 
 .form-size {
-  max-width: 600px;
-  margin: 0 1.5rem;
+  max-width: 768px;
+  margin: auto;
   padding: 15px;
 }
 
 #form-body {
   min-height: 100% !important;
   padding-bottom: 70px;
-  max-width: 600px;
+  margin: auto;
+}
+
+.width-768 {
+  max-width: 768px;
   margin: auto;
 }
 

@@ -7,9 +7,93 @@ import removeUserData from "./firebase/removeUserData";
 import { useLanguage } from "../context/LanguageContext";
 import { translations } from "../translations";
 
+// Export utility functions
+export const formatMonth = (monthStr, language) => {
+  if (language === "ar") {
+    const [year, month] = monthStr.split("-");
+    const date = new Date(year, month - 1);
+    return new Intl.DateTimeFormat("ar", {
+      year: "numeric",
+      month: "long",
+      calendar: "gregory",
+    }).format(date);
+  }
+  return new Intl.DateTimeFormat("en-US", {
+    year: "numeric",
+    month: "long",
+  }).format(new Date(monthStr));
+};
+
+export const groupDataByMonth = (data) => {
+  const grouped = {};
+  data.forEach(([key, entry]) => {
+    // Skip target entries
+    if (entry.isTarget) return;
+
+    const month = entry.date.substr(0, 7);
+    if (!grouped[month]) {
+      grouped[month] = { entries: [], total: 0 };
+    }
+    grouped[month].entries.push({ key, ...entry });
+    grouped[month].total += parseInt(entry.cash);
+  });
+  return grouped;
+};
+
+// Export the table component for reuse
+export const ExpenseTable = ({ entries, total, t, showDelete = false, onDelete = null, loadingId = null }) => (
+  <Table className="acc-table" striped bordered hover>
+    <thead>
+      <tr>
+        <th className="fw-bold bg-info rounded-3">{t("day")}</th>
+        <th className="fw-bold bg-info rounded-3">{t("note")}</th>
+        <th className="text-white fw-bold bg-success rounded-3">{t("amount")}</th>
+        {showDelete && <th className="text-danger"></th>}
+      </tr>
+    </thead>
+    <tbody>
+      {entries.map(({ key, cash, note, date }) => (
+        <tr key={key} id={key}>
+          <td className="fw-bold">{date.substr(8)}</td>
+          <td>{note}</td>
+          <td className="fw-bold">
+            <span className="text-success m-0 p-0">$</span>
+            {cash}
+          </td>
+          {showDelete && (
+            <td
+              className="acc-btn fw-bold rounded-3"
+              onClick={() => onDelete && onDelete(key)}
+              role="button"
+              aria-label={t("deleteEntry")}
+              style={{
+                pointerEvents: loadingId === key ? "none" : "auto",
+                opacity: loadingId === key ? 0.5 : 1,
+              }}
+            >
+              {loadingId === key ? (
+                <Spinner animation="border" size="sm" />
+              ) : (
+                "✕"
+              )}
+            </td>
+          )}
+        </tr>
+      ))}
+      <tr>
+        <td className=""></td>
+        <td className="bg-info text-text-black fw-bold rounded-3">{t("total")}</td>
+        <td className="bg-success text-white fw-bold rounded-3" colSpan={showDelete ? 2 : 1}>
+          ${total}
+        </td>
+      </tr>
+    </tbody>
+  </Table>
+);
+
 function History() {
   const [processedData, setProcessedData] = useState([]);
-  const [loading, setLoading] = useState(false);
+  const [loadingId, setLoadingId] = useState(null);
   const navigate = useNavigate();
   const { language } = useLanguage();
 
@@ -37,22 +121,6 @@ function History() {
     }
   }, [navigate]);
 
-  const groupDataByMonth = (data) => {
-    const grouped = {};
-    data.forEach(([key, entry]) => {
-      // Skip target entries
-      if (entry.isTarget) return;
-
-      const month = entry.date.substr(0, 7);
-      if (!grouped[month]) {
-        grouped[month] = { entries: [], total: 0 };
-      }
-      grouped[month].entries.push({ key, ...entry });
-      grouped[month].total += parseInt(entry.cash);
-    });
-    return grouped;
-  };
-
   // Handle removal of an entry
   const handleRemove = async (entryId) => {
     const userId = localStorage.getItem("id");
@@ -61,7 +129,7 @@ function History() {
       return;
     }
 
-    setLoading(true);
+    setLoadingId(entryId);
     try {
       // Remove the entry from Firebase
       await removeUserData(userId, entryId);
@@ -83,79 +151,29 @@ function History() {
       console.error("Error removing data:", error);
       alert(t("failedToRemove"));
     } finally {
-      setLoading(false);
+      setLoadingId(null);
     }
-  };
-
-  const formatMonth = (monthStr) => {
-    if (language === "ar") {
-      const [year, month] = monthStr.split("-");
-      const date = new Date(year, month - 1);
-      return new Intl.DateTimeFormat("ar", {
-        year: "numeric",
-        month: "long",
-        calendar: "gregory",
-      }).format(date);
-    }
-    return new Intl.DateTimeFormat("en-US", {
-      year: "numeric",
-      month: "long",
-    }).format(new Date(monthStr));
   };
 
   const renderMonthAccordion = (month, entries, total) => (
     <Accordion.Item key={month} eventKey={month}>
       <Accordion.Header>
         <div className="d-flex justify-content-between w-100 fw-bold">
-          <span>{formatMonth(month)}</span>
+          <span>{formatMonth(month, language)}</span>
           <span className="text-success fw-bold mx-2">
             {t("total")}: ${total}
           </span>
         </div>
       </Accordion.Header>
       <Accordion.Body className="acc-body">
-        <Table className="acc-table" striped bordered hover>
-          <thead>
-            <tr>
-              <th className="fw-bold bg-info">{t("day")}</th>
-              <th className="fw-bold bg-info">{t("note")}</th>
-              <th className="text-white fw-bold bg-success">{t("amount")}</th>
-              <th className="text-danger"></th>
-            </tr>
-          </thead>
-          <tbody>
-            {entries.map(({ key, cash, note, date }) => (
-              <tr key={key} id={key}>
-                <td className="fw-bold">{date.substr(8)}</td>
-                <td>{note}</td>
-                <td className="fw-bold">
-                  <span className="text-success m-0 p-0">$</span>
-                  {cash}
-                </td>
-                <td
-                  className="acc-btn fw-bold"
-                  onClick={() => !loading && handleRemove(key)}
-                  role="button"
-                  aria-label={t("deleteEntry")}
-                  style={{
-                    pointerEvents: loading ? "none" : "auto",
-                    opacity: loading ? 0.5 : 1,
-                  }}
-                >
-                  ✕
-                  {loading && (
-                    <Spinner animation="border" size="sm" className="ms-2" />
-                  )}
-                </td>
-              </tr>
-            ))}
-            <tr>
-              <td className=""></td>
-              <td className="bg-info text-text-black fw-bold">{t("total")}</td>
-              <td className="bg-success text-white fw-bold">${total}</td>
-            </tr>
-          </tbody>
-        </Table>
+        <ExpenseTable 
+          entries={entries} 
+          total={total} 
+          t={t} 
+          showDelete={true}
+          onDelete={(key) => handleRemove(key)}
+          loadingId={loadingId}
+        />
       </Accordion.Body>
     </Accordion.Item>
   );

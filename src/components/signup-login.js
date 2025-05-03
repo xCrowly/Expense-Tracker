@@ -94,9 +94,9 @@ function SignupPage() {
             {error && <div className="error">{error}</div>}
           </div>
 
-          <Form>
+          <Form className="p-3">
             <Form.Group className="mb-3" controlId="formBasicEmail">
-              <Form.Label>Enter Email address</Form.Label>
+              <Form.Label className="fw-bold">Enter Email address:</Form.Label>
               <Form.Control
                 onChange={handleName}
                 className="input"
@@ -106,7 +106,7 @@ function SignupPage() {
             </Form.Group>
 
             <Form.Group className="mb-3" controlId="formBasicPassword">
-              <Form.Label>Password</Form.Label>
+              <Form.Label className="fw-bold">Password:</Form.Label>
               <Form.Control
                 onChange={handlePassword}
                 className="input"
@@ -122,15 +122,15 @@ function SignupPage() {
               <Button
                 className="rounded-2"
                 onClick={handleSubmitSignUp}
-                variant="primary"
+                variant="outline-primary"
               >
                 {loadingSignUp ? "Signing Up..." : "Sign Up"}
               </Button>
               <Button
-                className="ms-3  rounded-5"
+                className="ms-3"
                 onClick={handleSubmitSignIn}
                 type="submit"
-                variant="outline-success"
+                variant="success"
               >
                 {loading ? "Signing In..." : "Sign In"}
               </Button>

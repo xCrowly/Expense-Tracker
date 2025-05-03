@@ -10,14 +10,20 @@ import SettingsModal from "./SettingsModal"; // Import the SettingsModal compone
 import { useLanguage } from "../context/LanguageContext";
 import { translations } from "../translations";
 import { DollarSign, NotebookPen, History, CalendarDays, Save } from "lucide-react";
+import Accordion from "react-bootstrap/Accordion";
+import { formatMonth, ExpenseTable } from "./history";
+import removeUserData from "./firebase/removeUserData";
+
 function HomePageForm() {
   const [cash, setCash] = useState("");
   const [date, setDate] = useState(new Date().toISOString().substring(0, 10));
   const [note, setNote] = useState("");
   const [error, setError] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [loadingId, setLoadingId] = useState(null);
   const [showSettings, setShowSettings] = useState(false);
   const [targetSpending, setTargetSpending] = useState("0");
+  const [currentMonthData, setCurrentMonthData] = useState({ entries: [], total: 0 });
   const { language } = useLanguage();
 
   // Load saved values from localStorage
@@ -124,11 +130,71 @@ function HomePageForm() {
     </div>
   );
 
+  // Update current month data whenever form is submitted or component mounts
+  useEffect(() => {
+    if (localStorage.getItem("data")) {
+      const data = Object.entries(JSON.parse(localStorage.getItem("data")))
+        .sort((a, b) => parseInt(b[1].date.split("-").join("")) - parseInt(a[1].date.split("-").join("")));
+      
+      const currentMonth = new Date().toISOString().substring(0, 7);
+      const currentMonthEntries = data
+        .filter(([_, entry]) => !entry.isTarget && entry.date.startsWith(currentMonth))
+        .map(([key, entry]) => ({ key, ...entry }));
+
+      const total = currentMonthEntries.reduce((sum, entry) => sum + parseInt(entry.cash), 0);
+      
+      setCurrentMonthData({
+        entries: currentMonthEntries,
+        total: total
+      });
+    }
+  }, [loading]); // Re-run when loading changes (i.e., after form submission)
+
+  // Handle removal of an entry
+  const handleRemove = async (entryId) => {
+    const userId = localStorage.getItem("id");
+    if (!userId || !entryId) {
+      console.error("User ID or Entry ID is missing");
+      return;
+    }
+
+    setLoadingId(entryId);
+    try {
+      // Remove the entry from Firebase
+      await removeUserData(userId, entryId);
+
+      // Update local state and localStorage
+      if (localStorage.getItem("data")) {
+        const data = JSON.parse(localStorage.getItem("data"));
+        delete data[entryId];
+        localStorage.setItem("data", JSON.stringify(data));
+        
+        // Update current month data
+        const currentMonth = new Date().toISOString().substring(0, 7);
+        const currentMonthEntries = Object.entries(data)
+          .filter(([_, entry]) => !entry.isTarget && entry.date.startsWith(currentMonth))
+          .map(([key, entry]) => ({ key, ...entry }));
+
+        const total = currentMonthEntries.reduce((sum, entry) => sum + parseInt(entry.cash), 0);
+        
+        setCurrentMonthData({
+          entries: currentMonthEntries,
+          total: total
+        });
+      }
+    } catch (error) {
+      console.error("Error removing data:", error);
+      alert(t("failedToRemove"));
+    } finally {
+      setLoadingId(null);
+    }
+  };
+
   return (
-    <div id="form-body" className="mb-5">
+    <div id="form-body" className="mb-5 container">
       <div className="d-flex justify-content-center align-content-center row mx-0">
-        <div className="row align-items-around justify-content-center my-4">
-          <div className="col h-100">
+        <div className="row align-items-around justify-content-center px-0 my-4 width-768">
+          <div className="col h-100 px-1">
             <div className="card bg-success text-white h-100">
               <div className="card-body">
                 <h5 className="card-title fw-bold">{t("thisMonthExpenses")}</h5>
@@ -146,7 +212,7 @@ function HomePageForm() {
               </div>
             </div>
           </div>
-          <div className="col h-100">
+          <div className="col h-100 px-1">
             <div className="card bg-primary text-white h-100">
               <div className="card-body">
                 <h5 className="card-title fw-bold">{t("monthlyTarget")}</h5>
@@ -214,7 +280,7 @@ function HomePageForm() {
           </InputGroup>
 
           {/* Cash Buttons */}
-          <div className="mb-1">
+          <div className="my-1">
             <p className="mb-2 fw-bold">{t("quickCash")}:</p>
             <div className="d-flex flex-wrap justify-content-start gap-2">
               {cashValues.map((amount) => (
@@ -255,7 +321,7 @@ function HomePageForm() {
           </InputGroup>
 
           {/* Quick Notes Buttons */}
-          <div className="mb-3">
+          <div className="my-1">
             <p className="mb-2 fw-bold">{t("quickNotes")}:</p>
             <div className="d-flex flex-wrap justify-content-start gap-2">
               {quickNotes.map((text) => (
@@ -315,6 +381,32 @@ function HomePageForm() {
           setQuickNotes={setQuickNotes}
           onTargetUpdate={(newTarget) => setTargetSpending(newTarget)}
         />
+      </div>
+
+      {/* Current Month Expenses Section */}
+      <div className="mt-4 width-768">
+        <Accordion>
+          <Accordion.Item eventKey="0">
+            <Accordion.Header>
+              <div className="d-flex justify-content-between w-100 fw-bold">
+                <span>{formatMonth(new Date().toISOString().substring(0, 7), language)}</span>
+                <span className="text-success fw-bold mx-2">
+                  {t("total")}: ${currentMonthData.total}
+                </span>
+              </div>
+            </Accordion.Header>
+            <Accordion.Body className="acc-body">
+              <ExpenseTable 
+                entries={currentMonthData.entries} 
+                total={currentMonthData.total} 
+                t={t}
+                showDelete={true}
+                onDelete={(key) => handleRemove(key)}
+                loadingId={loadingId}
+              />
+            </Accordion.Body>
+          </Accordion.Item>
+        </Accordion>
       </div>
     </div>
   );
