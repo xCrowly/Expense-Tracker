@@ -13,6 +13,7 @@ import {
   LogOut,
   Globe,
   UserCog,
+  Wallet,
 } from "lucide-react";
 
 function NavBar() {
@@ -39,6 +40,8 @@ function NavBar() {
     localStorage.removeItem("token");
     localStorage.removeItem("data");
     localStorage.removeItem("targetSpending");
+    localStorage.removeItem("incomeData");
+    localStorage.removeItem("firebase:host:expanse-tracker-e6806-default-rtdb.europe-west1.firebasedatabase.app");
 
     // Clear settings related items
     localStorage.removeItem("cashValues");
@@ -92,6 +95,13 @@ function NavBar() {
                   >
                     <History size={16} />
                     {t("history")}
+                  </Dropdown.Item>
+                  <Dropdown.Item
+                    onClick={() => navigate("/income-history")}
+                    className="d-flex align-items-center gap-2"
+                  >
+                    <Wallet size={16} />
+                    {t("incomeHistory")}
                   </Dropdown.Item>
                   <Dropdown.Item
                     onClick={() => navigate("/dashboard")}

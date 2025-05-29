@@ -12,25 +12,41 @@ export const translations = {
 
     // Form Labels
     expenses: 'Expenses',
+    income: 'Income',
     date: 'Date',
     note: 'Note',
     submit: 'Save',
     submitting: 'Saving...',
     addExpense: 'Add Expense',
-    pleaseEnterCash: 'Please enter cash',
+    addIncome: 'Add Income',
+    pleaseEnterCash: 'Please enter amount',
     quickCash: 'Quick Cash',
     quickNotes: 'Quick Notes',
+    source: 'Source',
+    selectSource: 'Select Source',
+
+    // Income Sources
+    salary: 'Salary',
+    freelance: 'Freelance',
+    investments: 'Investments',
+    business: 'Business',
+    bonus: 'Bonus',
+    other: 'Other',
+    incomeHistory: 'Income History',
 
     // Dashboard
     expenseDashboard: 'Expense Dashboard',
     totalExpenses: 'Total Expenses',
-    thisMonthExpenses: "This Month's Expenses:",
-    monthlyTarget: 'Monthly Budget:',
+    thisMonthExpenses: "This Month's Expenses",
+    monthlyTarget: 'Monthly Budget',
     overBudget: 'Over budget!',
     ofTarget: 'of target',
     addNewExpense: 'Add New Expense',
     remainingAmount: 'Remaining',
     overAmount: 'Over by',
+    monthlyIncome: "This Month's Income",
+    netBalance: 'Net Balance',
+    warningExpensesHigh: 'Warning: Expenses are over 80% of income!',
 
     // Settings
     languageSettings: 'Language Settings',
@@ -42,6 +58,13 @@ export const translations = {
     enterNewValue: 'Enter new value',
     add: 'Add',
     enterNewNote: 'Enter new note',
+
+    // Savings
+    savings: 'Savings',
+    savingsGoal: 'Monthly Savings Goal',
+    enterSavingsGoal: 'Enter savings goal',
+    savingsProgress: 'Progress towards goal',
+    currentSavings: 'Current Savings',
 
     // Quick Notes
     groceries: 'Groceries',
@@ -72,14 +95,28 @@ export const translations = {
 
     // Form Labels
     expenses: 'المصاريف',
+    income: 'الدخل',
     date: 'التاريخ',
     note: 'ملاحظة',
     submit: 'حفظ',
     submitting: 'جاري الإرسال...',
     addExpense: 'إضافة مصروف',
+    addIncome: 'إضافة دخل',
     pleaseEnterCash: 'الرجاء إدخال المبلغ',
     quickCash: 'المبالغ السريعة',
     quickNotes: 'الملاحظات السريعة',
+    source: 'المصدر',
+    selectSource: 'اختر المصدر',
+
+    // Income Sources
+    salary: 'راتب',
+    freelance: 'عمل حر',
+    investments: 'استثمارات',
+    business: 'تجارة',
+    bonus: 'مكافأة',
+    other: 'أخرى',
+    incomeHistory: 'سجل الدخل',
+
 
     // Dashboard
     expenseDashboard: 'لوحة المصاريف',
@@ -91,6 +128,9 @@ export const translations = {
     addNewExpense: 'إضافة مصروف جديد',
     remainingAmount: 'المتبقي',
     overAmount: 'تجاوزت بمقدار',
+    monthlyIncome: 'دخل هذا الشهر',
+    netBalance: 'الرصيد الصافي',
+    warningExpensesHigh: 'تحذير: المصاريف تجاوزت 80% من الدخل!',
 
     // Settings
     languageSettings: 'إعدادات اللغة',
@@ -102,6 +142,13 @@ export const translations = {
     enterNewValue: 'أدخل قيمة جديدة',
     add: 'إضافة',
     enterNewNote: 'أدخل ملاحظة جديدة',
+
+    // Savings
+    savings: 'المدخرات',
+    savingsGoal: 'هدف الادخار الشهري',
+    enterSavingsGoal: 'أدخل هدف الادخار',
+    savingsProgress: 'التقدم نحو الهدف',
+    currentSavings: 'المدخرات الحالية',
 
     // Quick Notes
     groceries: 'البقالة',

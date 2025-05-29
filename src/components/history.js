@@ -27,16 +27,22 @@ export const formatMonth = (monthStr, language) => {
 export const groupDataByMonth = (data) => {
   const grouped = {};
   data.forEach(([key, entry]) => {
-    // Skip target entries
-    if (entry.isTarget) return;
+    // Skip target entries or invalid entries
+    if (!entry || !entry.date || entry.isTarget) return;
 
-    const month = entry.date.substr(0, 7);
+    const month = entry.date.substr(0, 7); // Get YYYY-MM format
     if (!grouped[month]) {
       grouped[month] = { entries: [], total: 0 };
     }
     grouped[month].entries.push({ key, ...entry });
-    grouped[month].total += parseInt(entry.cash);
+    grouped[month].total += parseInt(entry.cash) || 0;
   });
+
+  // Sort entries within each month by date in descending order
+  Object.values(grouped).forEach(monthData => {
+    monthData.entries.sort((a, b) => b.date.localeCompare(a.date));
+  });
+
   return grouped;
 };
 
@@ -107,17 +113,24 @@ function History() {
       navigate("/");
     }
     if (localStorage.getItem("data")) {
-      const data = Object.entries(
-        JSON.parse(localStorage.getItem("data"))
-      ).sort((a, b) => {
-        return (
-          parseInt(b[1].date.split("-").join("")) -
-          parseInt(a[1].date.split("-").join(""))
-        );
-      });
-      // Filter out target entries
-      const expensesOnly = data.filter(([_, entry]) => !entry.isTarget);
-      setProcessedData(expensesOnly);
+      try {
+        const userData = JSON.parse(localStorage.getItem("data"));
+        // Get expenses data from the nested structure
+        const expensesData = userData.expenses || {};
+        
+        // Convert object to array of entries and filter out invalid entries
+        const data = Object.entries(expensesData)
+          .filter(([_, entry]) => entry && entry.date && !entry.isTarget)
+          .sort((a, b) => {
+            if (!a[1].date || !b[1].date) return 0;
+            return b[1].date.localeCompare(a[1].date);
+          });
+
+        setProcessedData(data);
+      } catch (error) {
+        console.error("Error processing history data:", error);
+        setProcessedData([]);
+      }
     }
   }, [navigate]);
 
@@ -125,7 +138,8 @@ function History() {
   const handleRemove = async (entryId) => {
     const userId = localStorage.getItem("id");
     if (!userId || !entryId) {
-      console.error("User ID or Entry ID is missing");
+      console.error("Both userId and entryId are required");
+      alert(t("failedToRemove"));
       return;
     }
 
@@ -134,17 +148,18 @@ function History() {
       // Remove the entry from Firebase
       await removeUserData(userId, entryId);
 
-      // Update local state to remove the deleted entry
+      // Update local state and localStorage
       setProcessedData((prevData) => {
         const updatedData = prevData.filter(([key]) => key !== entryId);
-        // Filter out target entries before storing in localStorage
-        const expensesOnly = updatedData.filter(
-          ([_, entry]) => !entry.isTarget
-        );
-        localStorage.setItem(
-          "data",
-          JSON.stringify(Object.fromEntries(expensesOnly))
-        );
+        
+        // Create the proper data structure for localStorage
+        const dataForStorage = {
+          expenses: Object.fromEntries(
+            updatedData.filter(([_, entry]) => !entry.isTarget)
+          )
+        };
+        
+        localStorage.setItem("data", JSON.stringify(dataForStorage));
         return updatedData;
       });
     } catch (error) {

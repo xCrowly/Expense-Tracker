@@ -4,8 +4,20 @@ import { db } from "./firebaseConfig"; // Import the db instance from firebaseCo
 // Add the entry to Firebase
 const addUserData = async (userId, cash, date, note) => {
   try {
-    await push(ref(db, "users/" + userId), {
-      cash: cash,
+    if (!cash || cash <= 0) {
+      throw new Error("Cash amount must be greater than 0");
+    }
+    
+    if (!date || !/^\d{4}-\d{2}-\d{2}$/.test(date)) {
+      throw new Error("Invalid date format. Use YYYY-MM-DD");
+    }
+
+    if (note.length > 100) {
+      throw new Error("Note must be 100 characters or less");
+    }
+
+    await push(ref(db, `users/${userId}/expenses`), {
+      cash: Number(cash),
       date: date,
       note: note,
     });

@@ -4,13 +4,11 @@ import { db } from "./firebaseConfig";
 // Save the monthly target to Firebase
 export const saveMonthlyTarget = async (userId, targetAmount) => {
   try {
-    // Store the target as a regular expense-like entry with required fields
-    await set(ref(db, `users/${userId}/${Date.now()}`), {
-      cash: parseInt(targetAmount),
-      date: new Date().toISOString().split("T")[0],
-      note: "Monthly Target Setting",
-      isTarget: true, // This field helps identify it as a target setting
-    });
+    if (targetAmount < 0) {
+      throw new Error("Monthly target amount cannot be negative");
+    }
+    
+    await set(ref(db, `users/${userId}/monthlyTarget`), Number(targetAmount));
     console.log("Monthly target saved successfully");
     return true;
   } catch (error) {
@@ -22,20 +20,9 @@ export const saveMonthlyTarget = async (userId, targetAmount) => {
 // Get the monthly target from Firebase
 export const getMonthlyTarget = async (userId) => {
   try {
-    const snapshot = await get(ref(db, `users/${userId}`));
+    const snapshot = await get(ref(db, `users/${userId}/monthlyTarget`));
     if (snapshot.exists()) {
-      const data = Object.entries(snapshot.val());
-
-      // Filter target entries and sort by timestamp (key) in descending order
-      const targetEntries = data
-        .filter(([_, entry]) => entry.isTarget)
-        .sort((a, b) => parseInt(b[0]) - parseInt(a[0]));
-
-      // Get the most recent target entry
-      if (targetEntries.length > 0) {
-        const mostRecentTarget = targetEntries[0];
-        return mostRecentTarget[1].cash.toString();
-      }
+      return snapshot.val().toString();
     }
     return "0"; // Default value if no target is set
   } catch (error) {

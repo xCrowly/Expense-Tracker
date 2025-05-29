@@ -35,12 +35,17 @@ function ExpenseVisualization() {
   useEffect(() => {
     // Load data from localStorage
     if (localStorage.getItem("data")) {
-      const rawData = Object.entries(JSON.parse(localStorage.getItem("data")));
-      // Filter out target entries
-      const expensesOnly = rawData
-        .filter(([_, entry]) => !entry.isTarget)
-        .map(([key, entry]) => ({ id: key, ...entry }));
-      setData(expensesOnly);
+      try {
+        const rawData = Object.entries(JSON.parse(localStorage.getItem("data")));
+        // Filter out target entries and invalid entries
+        const expensesOnly = rawData
+          .filter(([_, entry]) => entry && entry.date && !entry.isTarget)
+          .map(([key, entry]) => ({ id: key, ...entry }));
+        setData(expensesOnly);
+      } catch (error) {
+        console.error("Error loading visualization data:", error);
+        setData([]);
+      }
     }
   }, []);
 
@@ -49,13 +54,12 @@ function ExpenseVisualization() {
     const monthlyData = {};
 
     data.forEach((entry) => {
-      if (!entry.isTarget) {
-        // Extra check for safety
+      if (entry && entry.date && !entry.isTarget) {
         const month = entry.date.substr(0, 7);
         if (!monthlyData[month]) {
           monthlyData[month] = 0;
         }
-        monthlyData[month] += parseInt(entry.cash);
+        monthlyData[month] += parseInt(entry.cash) || 0;
       }
     });
 
@@ -83,14 +87,14 @@ function ExpenseVisualization() {
 
     // First, calculate total expenses and individual category totals
     data.forEach((entry) => {
-      if (!entry.isTarget) {
-        // Extra check for safety
+      if (entry && entry.cash && !entry.isTarget) {
         const category = entry.note || "Uncategorized";
         if (!categoryData[category]) {
           categoryData[category] = 0;
         }
-        categoryData[category] += parseInt(entry.cash);
-        totalExpenses += parseInt(entry.cash);
+        const amount = parseInt(entry.cash) || 0;
+        categoryData[category] += amount;
+        totalExpenses += amount;
       }
     });
 
@@ -149,8 +153,7 @@ function ExpenseVisualization() {
     const categories = new Set();
 
     data.forEach((entry) => {
-      if (!entry.isTarget) {
-        // Extra check for safety
+      if (entry && entry.date && !entry.isTarget) {
         const month = entry.date.substr(0, 7);
         const category = entry.note || "Uncategorized";
         months.add(month);
@@ -174,9 +177,9 @@ function ExpenseVisualization() {
 
       // Sum expenses for each month in this category
       data.forEach((entry) => {
-        if (!entry.isTarget && (entry.note || "Uncategorized") === category) {
+        if (entry && entry.date && !entry.isTarget && (entry.note || "Uncategorized") === category) {
           const month = entry.date.substr(0, 7);
-          monthlyData[month] += parseInt(entry.cash);
+          monthlyData[month] += parseInt(entry.cash) || 0;
         }
       });
 

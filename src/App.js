@@ -4,6 +4,7 @@ import Error from "./components/Error";
 import Footer from "./components/footer";
 import HomePageForm from "./components/home";
 import History from "./components/history";
+import IncomeHistory from "./components/IncomeHistory";
 import NavBar from "./components/navbar";
 import SignupPage from "./components/signup-login";
 import Dashboard from "./components/Dashboard";
@@ -43,6 +44,16 @@ function App() {
               element={
                 <div>
                   <History />
+                  <Footer />
+                </div>
+              }
+            />
+
+            <Route
+              path="/income-history"
+              element={
+                <div>
+                  <IncomeHistory />
                   <Footer />
                 </div>
               }

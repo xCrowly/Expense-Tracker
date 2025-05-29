@@ -8,18 +8,26 @@ const getUserData = async (userId) => {
     return null;
   }
   try {
-    const userRef = ref(db, `users/${userId}`);
-    const snapshot = await get(userRef);
+    // Get expenses data
+    const expensesRef = ref(db, `users/${userId}/expenses`);
+    const expensesSnapshot = await get(expensesRef);
+    
+    // Get income data
+    const incomeRef = ref(db, `users/${userId}/income`);
+    const incomeSnapshot = await get(incomeRef);
+    
+    // Get monthly target
+    const targetRef = ref(db, `users/${userId}/monthlyTarget`);
+    const targetSnapshot = await get(targetRef);
 
-    if (snapshot.exists()) {
-      const userData = snapshot.val();
-      localStorage.setItem("data", JSON.stringify(userData)); // Save data to localStorage
-      return userData; // Return the fetched data
-    } else {
-      localStorage.setItem("data", ""); // Clear localStorage if no data exists
-      console.log("No data available");
-      return null;
-    }
+    const userData = {
+      expenses: expensesSnapshot.exists() ? expensesSnapshot.val() : {},
+      income: incomeSnapshot.exists() ? incomeSnapshot.val() : {},
+      monthlyTarget: targetSnapshot.exists() ? targetSnapshot.val() : 0
+    };
+
+    localStorage.setItem("data", JSON.stringify(userData)); // Save data to localStorage
+    return userData; // Return the fetched data
   } catch (error) {
     console.error("Error fetching user data:", error);
     throw error; // Re-throw the error to handle it in the calling function
