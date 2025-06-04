@@ -62,8 +62,30 @@ export const getTotalExpenses = () => {
 // Get net balance
 export const getNetBalance = () => {
   const totalIncome = getTotalIncome();
-  const totalExpenses = getTotalExpenses();
-  return totalIncome - totalExpenses;
+  
+  // Get expenses excluding those before June 1, 2025
+  if (localStorage.getItem("data")) {
+    try {
+      const userData = JSON.parse(localStorage.getItem("data"));
+      const expensesData = userData.expenses || {};
+      const cutoffDate = new Date('2025-06-01');
+      
+      const filteredExpenses = Object.values(expensesData)
+        .filter(entry => {
+          if (!entry || entry.isTarget) return false;
+          // Only include expenses on or after June 1, 2025
+          const entryDate = new Date(entry.date);
+          return entryDate >= cutoffDate;
+        })
+        .reduce((total, entry) => total + (parseInt(entry.cash) || 0), 0);
+      
+      return totalIncome - filteredExpenses;
+    } catch (error) {
+      console.error("Error calculating net balance with date filter:", error);
+      return totalIncome;
+    }
+  }
+  return totalIncome;
 };
 
 // Calculate balance percentage for progress bar
