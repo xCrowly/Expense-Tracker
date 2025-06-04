@@ -16,76 +16,93 @@ function App() {
   return (
     <LanguageProvider>
       <Router>
-        <div className="App">
+        <div className="App app-container body-bg">
+          <div className="floating-circle"></div>
+          <div className="floating-circle"></div>
+          <div className="floating-circle"></div>
           <NavBar />
           <Routes>
             <Route
               path="/"
               element={
-                <div>
-                  <SignupPage />
+                <>
+                  <div className="main-content">
+                    <SignupPage />
+                  </div>
                   <Footer />
-                </div>
+                </>
               }
             />
 
             <Route
               path="/home"
               element={
-                <div>
-                  <HomePageForm />
+                <>
+                  <div className="main-content">
+                    <HomePageForm />
+                  </div>
                   <Footer />
-                </div>
+                </>
               }
             />
 
             <Route
               path="/history"
               element={
-                <div>
-                  <History />
+                <>
+                  <div className="main-content">
+                    <History />
+                  </div>
                   <Footer />
-                </div>
+                </>
               }
             />
 
             <Route
               path="/income-history"
               element={
-                <div>
-                  <IncomeHistory />
+                <>
+                  <div className="main-content">
+                    <IncomeHistory />
+                  </div>
                   <Footer />
-                </div>
+                </>
               }
             />
 
             <Route
               path="/dashboard"
               element={
-                <div>
-                  <Dashboard />
+                <>
+                  <div className="main-content">
+                    <Dashboard />
+                  </div>
                   <Footer />
-                </div>
+                </>
               }
             />
 
             <Route
               path="/settings"
               element={
-                <div>
-                  <Settings />
+                <>
+                  <div className="main-content">
+                    <Settings />
+                  </div>
                   <Footer />
-                </div>
+                </>
               }
             />
 
             <Route
               path="*"
               element={
-                <div>
-                  <Error />
+                <>
+                  <div className="main-content">
+                    <Error />
+                  </div>
                   <Footer />
-                </div>
+                </>
               }
             />
           </Routes>

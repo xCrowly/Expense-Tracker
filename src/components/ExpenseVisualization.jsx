@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback, forwardRef, useImperativeHandle } from "react";
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -13,6 +13,8 @@ import {
 } from "chart.js";
 import { Bar, Pie, Line } from "react-chartjs-2";
 import { Form } from "react-bootstrap";
+import { useLanguage } from "../context/LanguageContext";
+import { translations } from "../translations";
 
 // Register Chart.js components
 ChartJS.register(
@@ -27,27 +29,62 @@ ChartJS.register(
   Legend
 );
 
-function ExpenseVisualization() {
+const ExpenseVisualization = forwardRef((props, ref) => {
   const [data, setData] = useState([]);
+  const [incomeData, setIncomeData] = useState([]);
   const [chartType, setChartType] = useState("bar");
-  const [viewMode, setViewMode] = useState("monthly"); // 'monthly' or 'category'
+  const [viewMode, setViewMode] = useState("monthly"); // 'monthly', 'category', 'trend', or 'income'
+  const { language } = useLanguage();
 
-  useEffect(() => {
-    // Load data from localStorage
+  const t = (key) => translations[language][key] || key;
+
+  // Function to load data from localStorage
+  const loadData = useCallback(() => {
+    // Load expense data
     if (localStorage.getItem("data")) {
       try {
-        const rawData = Object.entries(JSON.parse(localStorage.getItem("data")));
-        // Filter out target entries and invalid entries
-        const expensesOnly = rawData
-          .filter(([_, entry]) => entry && entry.date && !entry.isTarget)
-          .map(([key, entry]) => ({ id: key, ...entry }));
-        setData(expensesOnly);
+        const userData = JSON.parse(localStorage.getItem("data"));
+        // Make sure we're accessing the expenses property
+        if (userData && userData.expenses) {
+          const expensesData = userData.expenses;
+          // Convert expenses object to array of entries with their keys
+          const expensesOnly = Object.entries(expensesData)
+            .filter(([_, entry]) => entry && entry.date && !entry.isTarget)
+            .map(([key, entry]) => ({ id: key, ...entry }));
+          setData(expensesOnly);
+        }
       } catch (error) {
         console.error("Error loading visualization data:", error);
         setData([]);
       }
     }
+    
+    // Load income data
+    if (localStorage.getItem("incomeData")) {
+      try {
+        const rawIncomeData = JSON.parse(localStorage.getItem("incomeData"));
+        if (rawIncomeData) {
+          const incomeEntries = Object.entries(rawIncomeData)
+            .filter(([_, entry]) => entry && entry.date)
+            .map(([key, entry]) => ({ id: key, ...entry }));
+          setIncomeData(incomeEntries);
+        }
+      } catch (error) {
+        console.error("Error loading income data:", error);
+        setIncomeData([]);
+      }
+    }
   }, []);
+
+  // Expose refresh method to parent components
+  useImperativeHandle(ref, () => ({
+    refreshData: loadData
+  }));
+
+  // Load data on component mount
+  useEffect(() => {
+    loadData();
+  }, [loadData]);
 
   // Process data for monthly visualization
   const processMonthlyData = () => {
@@ -70,7 +107,7 @@ function ExpenseVisualization() {
       labels: sortedMonths,
       datasets: [
         {
-          label: "Monthly Expenses",
+          label: t("monthlyExpenses"),
           data: sortedMonths.map((month) => monthlyData[month]),
           backgroundColor: "rgba(75, 192, 192, 0.6)",
           borderColor: "rgba(75, 192, 192, 1)",
@@ -88,7 +125,8 @@ function ExpenseVisualization() {
     // First, calculate total expenses and individual category totals
     data.forEach((entry) => {
       if (entry && entry.cash && !entry.isTarget) {
-        const category = entry.note || "Uncategorized";
+        // Use category field if available, otherwise use note field, or fallback to "Uncategorized"
+        const category = entry.category || entry.note || "Uncategorized";
         if (!categoryData[category]) {
           categoryData[category] = 0;
         }
@@ -98,12 +136,12 @@ function ExpenseVisualization() {
       }
     });
 
-    // Determine which categories are less than 5% of total
+    // Determine which categories are less than 1% of total
     const threshold = totalExpenses * 0.01;
     const mainCategories = {};
     let othersTotal = 0;
 
-    // Separate main categories and small ones (less than 5%)
+    // Separate main categories and small ones (less than 1%)
     Object.entries(categoryData).forEach(([category, amount]) => {
       if (amount >= threshold) {
         mainCategories[category] = amount;
@@ -134,7 +172,7 @@ function ExpenseVisualization() {
       labels: categories,
       datasets: [
         {
-          label: "Expenses by Category",
+          label: t("expensesByCategory"),
           data: categories.map((category) => mainCategories[category]),
           backgroundColor: backgroundColors,
           borderColor: backgroundColors.map((color) =>
@@ -155,7 +193,7 @@ function ExpenseVisualization() {
     data.forEach((entry) => {
       if (entry && entry.date && !entry.isTarget) {
         const month = entry.date.substr(0, 7);
-        const category = entry.note || "Uncategorized";
+        const category = entry.category || entry.note || "Uncategorized";
         months.add(month);
         categories.add(category);
       }
@@ -177,7 +215,8 @@ function ExpenseVisualization() {
 
       // Sum expenses for each month in this category
       data.forEach((entry) => {
-        if (entry && entry.date && !entry.isTarget && (entry.note || "Uncategorized") === category) {
+        if (entry && entry.date && !entry.isTarget && 
+            ((entry.category || entry.note || "Uncategorized") === category)) {
           const month = entry.date.substr(0, 7);
           monthlyData[month] += parseInt(entry.cash) || 0;
         }
@@ -199,6 +238,37 @@ function ExpenseVisualization() {
     };
   };
 
+  // Process data for monthly income visualization
+  const processIncomeData = () => {
+    const monthlyData = {};
+
+    incomeData.forEach((entry) => {
+      if (entry && entry.date) {
+        const month = entry.date.substr(0, 7);
+        if (!monthlyData[month]) {
+          monthlyData[month] = 0;
+        }
+        monthlyData[month] += parseInt(entry.amount) || 0;
+      }
+    });
+
+    // Sort by month
+    const sortedMonths = Object.keys(monthlyData).sort();
+
+    return {
+      labels: sortedMonths,
+      datasets: [
+        {
+          label: t("monthlyIncomeVis"),
+          data: sortedMonths.map((month) => monthlyData[month]),
+          backgroundColor: "rgba(54, 162, 235, 0.6)",
+          borderColor: "rgba(54, 162, 235, 1)",
+          borderWidth: 1,
+        },
+      ],
+    };
+  };
+
   // Get current chart data based on viewMode
   const getChartData = () => {
     if (viewMode === "monthly") {
@@ -207,6 +277,8 @@ function ExpenseVisualization() {
       return processCategoryData();
     } else if (viewMode === "trend") {
       return processTrendData();
+    } else if (viewMode === "income") {
+      return processIncomeData();
     }
     return { labels: [], datasets: [] };
   };
@@ -226,10 +298,12 @@ function ExpenseVisualization() {
           display: true,
           text:
             viewMode === "monthly"
-              ? "Monthly Expenses"
+              ? t("monthlyExpenses")
               : viewMode === "category"
-              ? "Expenses by Category"
-              : "Spending Trends by Category",
+              ? t("expensesByCategory")
+              : viewMode === "income"
+              ? t("monthlyIncomeVis")
+              : t("categoryTrends"),
         },
       },
     };
@@ -259,9 +333,10 @@ function ExpenseVisualization() {
                 value={viewMode}
                 onChange={(e) => setViewMode(e.target.value)}
               >
-                <option value="monthly">Monthly Expenses</option>
-                <option value="category">Expenses by Category</option>
-                <option value="trend">Category Trends Over Time</option>
+                <option value="monthly">{t("monthlyExpenses")}</option>
+                <option value="category">{t("expensesByCategory")}</option>
+                <option value="trend">{t("categoryTrends")}</option>
+                <option value="income">{t("monthlyIncomeVis")}</option>
               </Form.Select>
             </Form.Group>
 
@@ -286,16 +361,16 @@ function ExpenseVisualization() {
       </div>
 
       <div style={{ height: "400px" }}>
-        {data.length > 0 ? (
+        {(viewMode === "income" ? incomeData.length > 0 : data.length > 0) ? (
           renderChart()
         ) : (
           <div className="text-center py-5 text-muted">
-            <p>No expense data available to visualize</p>
+            <p>{viewMode === "income" ? t("noIncomeData") : t("noExpenseData")}</p>
           </div>
         )}
       </div>
     </div>
   );
-}
+});
 
 export default ExpenseVisualization;

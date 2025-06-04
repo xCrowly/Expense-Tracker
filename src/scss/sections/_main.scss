@@ -5,17 +5,133 @@
 }
 
 .body-bg {
-
   min-height: 100vh;
   width: 100%;
   background: linear-gradient(
     to bottom,
-    rgb(99, 25, 100) 0%,
-    rgb(4, 4, 86) 100%
+    rgb(125, 32, 127) 0%,
+    rgb(5, 5, 111) 100%
   );
+  position: relative;
+  overflow: hidden;
+  
+  &::before,
+  &::after {
+    content: "";
+    position: absolute;
+    border-radius: 50%;
+    opacity: 0.5;
+    animation-timing-function: ease-in-out;
+    animation-iteration-count: infinite;
+    animation-direction: alternate;
+    box-shadow: 0 0 30px 10px rgba(255, 255, 255, 0.2), inset 0 0 20px rgba(255, 255, 255, 0.1);
+    background: radial-gradient(circle at 30% 40%, rgba(255, 255, 255, 0.3), rgba(255, 255, 255, 0.1) 70%);
+    backdrop-filter: blur(1px);
+    z-index: 0;
+  }
+  
+  &::before {
+    width: 300px;
+    height: 300px;
+    left: -100px;
+    top: 10%;
+    animation: floatCircle1 15s infinite;
+  }
+  
+  &::after {
+    width: 400px;
+    height: 400px;
+    right: -150px;
+    bottom: 10%;
+    animation: floatCircle2 20s infinite;
+  }
 }
 
+// Additional floating circles
+.body-bg::before,
+.body-bg::after,
+.floating-circle {
+  pointer-events: none;
+}
 
+.floating-circle {
+  position: absolute;
+  border-radius: 50%;
+  opacity: 0.6;
+  animation-timing-function: ease-in-out;
+  animation-iteration-count: infinite;
+  animation-direction: alternate;
+  box-shadow: 0 0 25px 8px rgba(255, 255, 255, 0.15), inset 0 0 15px rgba(255, 255, 255, 0.1);
+  background: radial-gradient(circle at 40% 50%, rgba(255, 255, 255, 0.35), rgba(255, 255, 255, 0.08) 65%);
+  backdrop-filter: blur(1px);
+  z-index: 0;
+  
+  &:nth-child(1) {
+    width: 150px;
+    height: 150px;
+    top: 20%;
+    left: 30%;
+    animation: floatCircle3 18s infinite;
+  }
+  
+  &:nth-child(2) {
+    width: 200px;
+    height: 200px;
+    top: 50%;
+    right: 25%;
+    animation: floatCircle4 25s infinite;
+    background: radial-gradient(circle at 60% 30%, rgba(255, 255, 255, 0.4), rgba(255, 255, 255, 0.05) 70%);
+  }
+  
+  &:nth-child(3) {
+    width: 100px;
+    height: 100px;
+    bottom: 30%;
+    left: 20%;
+    animation: floatCircle5 12s infinite;
+    background: radial-gradient(circle at 35% 45%, rgba(255, 255, 255, 0.3), rgba(255, 255, 255, 0.1) 60%);
+  }
+}
+
+// Add z-index to content elements to position them above the floating circles
+.main-content, 
+.navbar, 
+.footer, 
+#form-body, 
+.container {
+  position: relative;
+  z-index: 1;
+}
+
+@keyframes floatCircle1 {
+  0% { transform: translateY(0) translateX(0) scale(1); filter: hue-rotate(0deg); }
+  50% { transform: translateY(100px) translateX(50px) scale(1.1); filter: hue-rotate(15deg); }
+  100% { transform: translateY(0) translateX(0) scale(1); filter: hue-rotate(0deg); }
+}
+
+@keyframes floatCircle2 {
+  0% { transform: translateY(0) translateX(0) scale(1); filter: hue-rotate(0deg); }
+  50% { transform: translateY(-120px) translateX(-70px) scale(1.15); filter: hue-rotate(-20deg); }
+  100% { transform: translateY(0) translateX(0) scale(1); filter: hue-rotate(0deg); }
+}
+
+@keyframes floatCircle3 {
+  0% { transform: translateY(0) translateX(0) rotate(0); filter: hue-rotate(0deg); }
+  50% { transform: translateY(-80px) translateX(40px) rotate(10deg); filter: hue-rotate(30deg); }
+  100% { transform: translateY(0) translateX(0) rotate(0); filter: hue-rotate(0deg); }
+}
+
+@keyframes floatCircle4 {
+  0% { transform: translateY(0) translateX(0) scale(1); filter: hue-rotate(0deg); }
+  50% { transform: translateY(90px) translateX(-60px) scale(1.1); filter: hue-rotate(-15deg); }
+  100% { transform: translateY(0) translateX(0) scale(1); filter: hue-rotate(0deg); }
+}
+
+@keyframes floatCircle5 {
+  0% { transform: translateY(0) translateX(0) rotate(0); filter: hue-rotate(0deg); }
+  50% { transform: translateY(60px) translateX(30px) rotate(-15deg); filter: hue-rotate(10deg); }
+  100% { transform: translateY(0) translateX(0) rotate(0); filter: hue-rotate(0deg); }
+}
 
 #main-body {
   min-height: 100vh !important;

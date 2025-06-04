@@ -47,7 +47,16 @@ export const translations = {
     monthlyIncome: "This Month's Income",
     netBalance: 'Net Balance',
     warningExpensesHigh: 'Warning: Expenses are over 80% of income!',
+    totalIncome: 'Total Income',
 
+    // Visualization
+    monthlyExpenses: 'Monthly Expenses',
+    expensesByCategory: 'Expenses by Category',
+    categoryTrends: 'Category Trends Over Time',
+    monthlyIncomeVis: 'Monthly Income',
+    noIncomeData: 'No income data available to visualize',
+    noExpenseData: 'No expense data available to visualize',
+    
     // Settings
     languageSettings: 'Language Settings',
     selectLanguage: 'Select Language',
@@ -131,7 +140,16 @@ export const translations = {
     monthlyIncome: 'دخل هذا الشهر',
     netBalance: 'الرصيد الصافي',
     warningExpensesHigh: 'تحذير: المصاريف تجاوزت 80% من الدخل!',
+    totalIncome: 'إجمالي الدخل',
 
+    // Visualization
+    monthlyExpenses: 'المصاريف الشهرية',
+    expensesByCategory: 'المصاريف حسب الفئة',
+    categoryTrends: 'اتجاهات الفئات عبر الزمن',
+    monthlyIncomeVis: 'الدخل الشهري',
+    noIncomeData: 'لا توجد بيانات دخل متاحة للعرض',
+    noExpenseData: 'لا توجد بيانات مصاريف متاحة للعرض',
+    
     // Settings
     languageSettings: 'إعدادات اللغة',
     selectLanguage: 'اختر اللغة',

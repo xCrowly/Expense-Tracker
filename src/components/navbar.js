@@ -16,6 +16,12 @@ import {
   Wallet,
 } from "lucide-react";
 
+// Custom CSS for dropdown
+const dropdownStyle = {
+  zIndex: 9999,
+  position: 'absolute'
+};
+
 function NavBar() {
   const location = useLocation();
   const navigate = useNavigate();
@@ -41,7 +47,9 @@ function NavBar() {
     localStorage.removeItem("data");
     localStorage.removeItem("targetSpending");
     localStorage.removeItem("incomeData");
-    localStorage.removeItem("firebase:host:expanse-tracker-e6806-default-rtdb.europe-west1.firebasedatabase.app");
+    localStorage.removeItem(
+      "firebase:host:expanse-tracker-e6806-default-rtdb.europe-west1.firebasedatabase.app"
+    );
 
     // Clear settings related items
     localStorage.removeItem("cashValues");
@@ -60,7 +68,7 @@ function NavBar() {
   };
 
   return (
-    <Navbar className="navbar-styling mb-3 p-3 shadow" sticky="top">
+    <Navbar className="navbar-styling mb-3 p-3 shadow" sticky="top" style={{ zIndex: 1030 }}>
       <Container>
         <Link
           className="nav-title me-0 text-primary fs-5 fw-bold text-decoration-none"
@@ -68,7 +76,7 @@ function NavBar() {
         >
           {t("expenseTracker")}
         </Link>
-        <div className="d-flex align-items-center ">
+        <div className="d-flex align-items-center">
           {!homeBtnHide && (
             <>
               <Dropdown>
@@ -77,11 +85,11 @@ function NavBar() {
                   id="dropdown-basic"
                   className="text-decoration-none text-secondary d-flex align-items-center gap-2"
                 >
-                  <UserCog size={20} className="text-success"/>
+                  <UserCog size={20} className="text-success" />
                   <i>{getName()}</i>
                 </Dropdown.Toggle>
 
-                <Dropdown.Menu>
+                <Dropdown.Menu style={dropdownStyle}>
                   <Dropdown.Item
                     onClick={() => navigate("/settings")}
                     className="d-flex align-items-center gap-2"

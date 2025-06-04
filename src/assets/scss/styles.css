@@ -40,7 +40,7 @@
   --bs-warning: #ffc107;
   --bs-danger: #d43240;
   --bs-light: #ededed;
-  --bs-dark: #212529;
+  --bs-dark: #2c323a;
   --bs-primary-rgb: 29, 53, 87;
   --bs-secondary-rgb: 51, 65, 85;
   --bs-success-rgb: 35, 114, 99;
@@ -48,7 +48,7 @@
   --bs-warning-rgb: 255, 193, 7;
   --bs-danger-rgb: 212, 50, 64;
   --bs-light-rgb: 237, 237, 237;
-  --bs-dark-rgb: 33, 37, 41;
+  --bs-dark-rgb: 44, 50, 58;
   --bs-primary-text-emphasis: #0c1523;
   --bs-secondary-text-emphasis: #141a22;
   --bs-success-text-emphasis: #0e2e28;
@@ -2028,13 +2028,13 @@ progress {
 
 .table-dark {
   --bs-table-color: #fff;
-  --bs-table-bg: #212529;
-  --bs-table-border-color: #373b3e;
-  --bs-table-striped-bg: #2c3034;
+  --bs-table-bg: #2c323a;
+  --bs-table-border-color: #41474e;
+  --bs-table-striped-bg: #373c44;
   --bs-table-striped-color: #fff;
-  --bs-table-active-bg: #373b3e;
+  --bs-table-active-bg: #41474e;
   --bs-table-active-color: #fff;
-  --bs-table-hover-bg: #323539;
+  --bs-table-hover-bg: #3c4149;
   --bs-table-hover-color: #fff;
   color: var(--bs-table-color);
   border-color: var(--bs-table-border-color);
@@ -3081,19 +3081,19 @@ textarea.form-control-lg {
 
 .btn-dark {
   --bs-btn-color: #fff;
-  --bs-btn-bg: #212529;
-  --bs-btn-border-color: #212529;
+  --bs-btn-bg: #2c323a;
+  --bs-btn-border-color: #2c323a;
   --bs-btn-hover-color: #fff;
-  --bs-btn-hover-bg: #424649;
-  --bs-btn-hover-border-color: #373b3e;
-  --bs-btn-focus-shadow-rgb: 66, 70, 73;
+  --bs-btn-hover-bg: #4c5158;
+  --bs-btn-hover-border-color: #41474e;
+  --bs-btn-focus-shadow-rgb: 76, 81, 88;
   --bs-btn-active-color: #fff;
-  --bs-btn-active-bg: #4d5154;
-  --bs-btn-active-border-color: #373b3e;
+  --bs-btn-active-bg: #565b61;
+  --bs-btn-active-border-color: #41474e;
   --bs-btn-active-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
   --bs-btn-disabled-color: #fff;
-  --bs-btn-disabled-bg: #212529;
-  --bs-btn-disabled-border-color: #212529;
+  --bs-btn-disabled-bg: #2c323a;
+  --bs-btn-disabled-border-color: #2c323a;
 }
 
 .btn-outline-primary {
@@ -3216,19 +3216,19 @@ textarea.form-control-lg {
 }
 
 .btn-outline-dark {
-  --bs-btn-color: #212529;
-  --bs-btn-border-color: #212529;
+  --bs-btn-color: #2c323a;
+  --bs-btn-border-color: #2c323a;
   --bs-btn-hover-color: #fff;
-  --bs-btn-hover-bg: #212529;
-  --bs-btn-hover-border-color: #212529;
-  --bs-btn-focus-shadow-rgb: 33, 37, 41;
+  --bs-btn-hover-bg: #2c323a;
+  --bs-btn-hover-border-color: #2c323a;
+  --bs-btn-focus-shadow-rgb: 44, 50, 58;
   --bs-btn-active-color: #fff;
-  --bs-btn-active-bg: #212529;
-  --bs-btn-active-border-color: #212529;
+  --bs-btn-active-bg: #2c323a;
+  --bs-btn-active-border-color: #2c323a;
   --bs-btn-active-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
-  --bs-btn-disabled-color: #212529;
+  --bs-btn-disabled-color: #2c323a;
   --bs-btn-disabled-bg: transparent;
-  --bs-btn-disabled-border-color: #212529;
+  --bs-btn-disabled-border-color: #2c323a;
   --bs-gradient: none;
 }
 
@@ -6801,7 +6801,7 @@ textarea.form-control-lg {
 
 .text-bg-dark {
   color: #fff !important;
-  background-color: RGBA(33, 37, 41, var(--bs-bg-opacity, 1)) !important;
+  background-color: RGBA(44, 50, 58, var(--bs-bg-opacity, 1)) !important;
 }
 
 .link-primary {
@@ -6872,8 +6872,8 @@ textarea.form-control-lg {
   text-decoration-color: RGBA(var(--bs-dark-rgb), var(--bs-link-underline-opacity, 1)) !important;
 }
 .link-dark:hover, .link-dark:focus {
-  color: RGBA(26, 30, 33, var(--bs-link-opacity, 1)) !important;
-  text-decoration-color: RGBA(26, 30, 33, var(--bs-link-underline-opacity, 1)) !important;
+  color: RGBA(35, 40, 46, var(--bs-link-opacity, 1)) !important;
+  text-decoration-color: RGBA(35, 40, 46, var(--bs-link-underline-opacity, 1)) !important;
 }
 
 .link-body-emphasis {
@@ -11869,9 +11869,159 @@ textarea.form-control-lg {
 .body-bg {
   min-height: 100vh;
   width: 100%;
-  background: linear-gradient(to bottom, rgb(99, 25, 100) 0%, rgb(4, 4, 86) 100%);
+  background: linear-gradient(to bottom, rgb(125, 32, 127) 0%, rgb(5, 5, 111) 100%);
+  position: relative;
+  overflow: hidden;
+}
+.body-bg::before, .body-bg::after {
+  content: "";
+  position: absolute;
+  border-radius: 50%;
+  opacity: 0.5;
+  animation-timing-function: ease-in-out;
+  animation-iteration-count: infinite;
+  animation-direction: alternate;
+  box-shadow: 0 0 30px 10px rgba(255, 255, 255, 0.2), inset 0 0 20px rgba(255, 255, 255, 0.1);
+  background: radial-gradient(circle at 30% 40%, rgba(255, 255, 255, 0.3), rgba(255, 255, 255, 0.1) 70%);
+  backdrop-filter: blur(1px);
+  z-index: 0;
+}
+.body-bg::before {
+  width: 300px;
+  height: 300px;
+  left: -100px;
+  top: 10%;
+  animation: floatCircle1 15s infinite;
+}
+.body-bg::after {
+  width: 400px;
+  height: 400px;
+  right: -150px;
+  bottom: 10%;
+  animation: floatCircle2 20s infinite;
 }
 
+.body-bg::before,
+.body-bg::after,
+.floating-circle {
+  pointer-events: none;
+}
+
+.floating-circle {
+  position: absolute;
+  border-radius: 50%;
+  opacity: 0.6;
+  animation-timing-function: ease-in-out;
+  animation-iteration-count: infinite;
+  animation-direction: alternate;
+  box-shadow: 0 0 25px 8px rgba(255, 255, 255, 0.15), inset 0 0 15px rgba(255, 255, 255, 0.1);
+  background: radial-gradient(circle at 40% 50%, rgba(255, 255, 255, 0.35), rgba(255, 255, 255, 0.08) 65%);
+  backdrop-filter: blur(1px);
+  z-index: 0;
+}
+.floating-circle:nth-child(1) {
+  width: 150px;
+  height: 150px;
+  top: 20%;
+  left: 30%;
+  animation: floatCircle3 18s infinite;
+}
+.floating-circle:nth-child(2) {
+  width: 200px;
+  height: 200px;
+  top: 50%;
+  right: 25%;
+  animation: floatCircle4 25s infinite;
+  background: radial-gradient(circle at 60% 30%, rgba(255, 255, 255, 0.4), rgba(255, 255, 255, 0.05) 70%);
+}
+.floating-circle:nth-child(3) {
+  width: 100px;
+  height: 100px;
+  bottom: 30%;
+  left: 20%;
+  animation: floatCircle5 12s infinite;
+  background: radial-gradient(circle at 35% 45%, rgba(255, 255, 255, 0.3), rgba(255, 255, 255, 0.1) 60%);
+}
+
+.main-content,
+.navbar,
+.footer,
+#form-body,
+.container {
+  position: relative;
+  z-index: 1;
+}
+
+@keyframes floatCircle1 {
+  0% {
+    transform: translateY(0) translateX(0) scale(1);
+    filter: hue-rotate(0deg);
+  }
+  50% {
+    transform: translateY(100px) translateX(50px) scale(1.1);
+    filter: hue-rotate(15deg);
+  }
+  100% {
+    transform: translateY(0) translateX(0) scale(1);
+    filter: hue-rotate(0deg);
+  }
+}
+@keyframes floatCircle2 {
+  0% {
+    transform: translateY(0) translateX(0) scale(1);
+    filter: hue-rotate(0deg);
+  }
+  50% {
+    transform: translateY(-120px) translateX(-70px) scale(1.15);
+    filter: hue-rotate(-20deg);
+  }
+  100% {
+    transform: translateY(0) translateX(0) scale(1);
+    filter: hue-rotate(0deg);
+  }
+}
+@keyframes floatCircle3 {
+  0% {
+    transform: translateY(0) translateX(0) rotate(0);
+    filter: hue-rotate(0deg);
+  }
+  50% {
+    transform: translateY(-80px) translateX(40px) rotate(10deg);
+    filter: hue-rotate(30deg);
+  }
+  100% {
+    transform: translateY(0) translateX(0) rotate(0);
+    filter: hue-rotate(0deg);
+  }
+}
+@keyframes floatCircle4 {
+  0% {
+    transform: translateY(0) translateX(0) scale(1);
+    filter: hue-rotate(0deg);
+  }
+  50% {
+    transform: translateY(90px) translateX(-60px) scale(1.1);
+    filter: hue-rotate(-15deg);
+  }
+  100% {
+    transform: translateY(0) translateX(0) scale(1);
+    filter: hue-rotate(0deg);
+  }
+}
+@keyframes floatCircle5 {
+  0% {
+    transform: translateY(0) translateX(0) rotate(0);
+    filter: hue-rotate(0deg);
+  }
+  50% {
+    transform: translateY(60px) translateX(30px) rotate(-15deg);
+    filter: hue-rotate(10deg);
+  }
+  100% {
+    transform: translateY(0) translateX(0) rotate(0);
+    filter: hue-rotate(0deg);
+  }
+}
 #main-body {
   min-height: 100vh !important;
 }
@@ -11963,66 +12113,6 @@ textarea.form-control-lg {
 .home-btn {
   font-size: medium;
   padding: 5px;
-}
-
-@media (max-width: 768px) {
-  .footer-text {
-    font-size: 0.7rem !important;
-    /* Smaller font size for mobile */
-  }
-  #my-footer {
-    height: auto !important;
-    /* Smaller logo size for mobile */
-  }
-}
-#my-footer {
-  width: 100%;
-  height: 40px;
-  background: var(--bs-light);
-  /* Use Bootstrap's light theme color */
-  position: fixed;
-  bottom: 0;
-  padding: 0;
-  /* Increased padding for better spacing */
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
-  box-shadow: 0 -2px 15px rgb(0, 0, 0);
-  /* Add a subtle shadow for depth */
-  z-index: 1000;
-  /* Ensure the footer stays above other content */
-}
-
-.footer-text {
-  display: flex;
-  justify-content: center;
-  flex-direction: column;
-  align-items: center;
-  text-align: center;
-  /* Center-align text for better readability */
-  margin: 0 10px;
-  /* Remove unnecessary margin */
-  font-size: 0.8rem;
-  /* Use rem units for better scalability */
-  color: #333;
-  /* Darker text color for better contrast */
-}
-
-.footer-text a {
-  color: #007bff;
-  /* Bootstrap's primary blue color for links */
-  text-decoration: none;
-  /* Remove underline */
-  font-weight: 500;
-  /* Slightly bold for emphasis */
-  margin-top: 0;
-  /* Add spacing between text and link */
-}
-
-.footer-text a:hover {
-  text-decoration: underline;
-  /* Add underline on hover for better UX */
 }
 
 .error-page {
