@@ -47,13 +47,12 @@ function NavBar() {
     localStorage.removeItem("data");
     localStorage.removeItem("targetSpending");
     localStorage.removeItem("incomeData");
+    localStorage.removeItem("savingsGoal");
     localStorage.removeItem(
       "firebase:host:expanse-tracker-e6806-default-rtdb.europe-west1.firebasedatabase.app"
     );
 
-    // Clear settings related items
-    localStorage.removeItem("cashValues");
-    localStorage.removeItem("quickNotes");
+    // Clear settings related items 
     localStorage.removeItem("language");
 
     window.location.href = "/";

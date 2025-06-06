@@ -38,13 +38,14 @@ const ExpenseForm = ({
       </InputGroup>
 
       {/* Cash Buttons */}
-      <div className="my-1">
+      <div className="my-3">
         <p className="mb-2 fw-bold">{t("quickCash")}:</p>
         <div className="d-flex flex-wrap justify-content-start gap-2">
           {cashValues.map((amount) => (
             <Button
               key={amount}
-              variant="outline-secondary"
+              variant="outline-success"
+              className="rounded-2 shadow-sm px-3 py-1 fw-medium"
               onClick={() => setCash(amount)}
             >
               ${amount}
@@ -79,13 +80,14 @@ const ExpenseForm = ({
       </InputGroup>
 
       {/* Quick Notes Buttons */}
-      <div className="my-1">
+      <div className="my-3">
         <p className="mb-2 fw-bold">{t("quickNotes")}:</p>
         <div className="d-flex flex-wrap justify-content-start gap-2">
           {quickNotes.map((text) => (
             <Button
               key={text}
-              variant="outline-primary"
+              variant="outline-warning"
+              className="rounded-2 shadow-sm px-3 py-1 text-dark border-warning fw-medium"
               onClick={() => setNote(text)}
             >
               {text}

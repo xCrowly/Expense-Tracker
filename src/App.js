@@ -10,17 +10,19 @@ import SignupPage from "./components/signup-login";
 import Dashboard from "./components/Dashboard";
 import Settings from "./pages/Settings";
 import { LanguageProvider } from "./context/LanguageContext";
+import { AuthProvider } from "./contexts/AuthContext";
 import "./App.css";
 
 function App() {
   return (
     <LanguageProvider>
-      <Router>
-        <div className="App app-container body-bg">
-          <div className="floating-circle"></div>
-          <div className="floating-circle"></div>
-          <div className="floating-circle"></div>
-          <NavBar />
+      <AuthProvider>
+        <Router>
+          <div className="App app-container body-bg">
+            <div className="floating-circle"></div>
+            <div className="floating-circle"></div>
+            <div className="floating-circle"></div>
+            <NavBar />
           <Routes>
             <Route
               path="/"
@@ -108,6 +110,7 @@ function App() {
           </Routes>
         </div>
       </Router>
+      </AuthProvider>
     </LanguageProvider>
   );
 }

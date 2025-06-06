@@ -1,6 +1,13 @@
 import React, { useState } from "react";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
+import InputGroup from "react-bootstrap/InputGroup";
+import Card from "react-bootstrap/Card";
+import Container from "react-bootstrap/Container";
+import Row from "react-bootstrap/Row";
+import Col from "react-bootstrap/Col";
+import Alert from "react-bootstrap/Alert";
+import { FaEnvelope, FaLock, FaSignInAlt, FaUserPlus } from "react-icons/fa";
 import signIn from "./firebase/signIn";
 import signUp from "./firebase/signUp";
 import { useNavigate } from "react-router-dom";
@@ -75,70 +82,111 @@ function SignupPage() {
     }
   };
 
-  return (
-    <div className="pb-3">
-      <div className="login-signup">
-        <div className="pb-3">
-          <div className="d-flex justify-content-center text-white">
-            <b>
-              Hint:
-              <span className="fs-6 fw-light">
-                {" "}
-                you can use any random email.
-              </span>
-            </b>
-          </div>
-        </div>
-        <div className="login-size rounded-4 p-3 bg-light rounded-1 shadow mt-1">
-          <div className="messages text-danger">
-            {error && <div className="error">{error}</div>}
-          </div>
+  return (  
+    <Container fluid className="py-4 min-vh-auto d-flex align-items-center justify-content-center" >
+      <Row className="justify-content-center w-100">
+        <Col xs={12} sm={10} md={8} lg={6} xl={5}>
+          <Card className="border-0 shadow-lg">
+            <Card.Header className="bg-white text-center border-0 pt-4 pb-3">
+              <h2 className="text-primary mb-0">Welcome</h2>
+              <p className="text-muted">Sign in or create your account</p>
+            </Card.Header>
+            
+            <Card.Body className="px-4 py-4">
+              {error && (
+                <Alert variant="danger" className="mb-4 text-center">
+                  {error}
+                </Alert>
+              )}
+              
+              <div className="text-center mb-4">
+                <small className="text-muted">
+                  <strong>Hint:</strong> you can use any random email.
+                </small>
+              </div>
+              
+              <Form>
+                <Form.Group className="mb-4" controlId="formBasicEmail">
+                  <Form.Label className="fw-bold">Email address</Form.Label>
+                  <InputGroup>
+                    <InputGroup.Text className="bg-light">
+                      <FaEnvelope />
+                    </InputGroup.Text>
+                    <Form.Control
+                      onChange={handleName}
+                      value={email}
+                      type="email"
+                      placeholder="Enter your email"
+                      className="py-2"
+                    />
+                  </InputGroup>
+                </Form.Group>
 
-          <Form className="p-3">
-            <Form.Group className="mb-3" controlId="formBasicEmail">
-              <Form.Label className="fw-bold">Enter Email address:</Form.Label>
-              <Form.Control
-                onChange={handleName}
-                className="input"
-                value={email}
-                type="text"
-              />
-            </Form.Group>
+                <Form.Group className="mb-4" controlId="formBasicPassword">
+                  <Form.Label className="fw-bold">Password</Form.Label>
+                  <InputGroup>
+                    <InputGroup.Text className="bg-light">
+                      <FaLock />
+                    </InputGroup.Text>
+                    <Form.Control
+                      onChange={handlePassword}
+                      value={password}
+                      type="password"
+                      placeholder="Enter your password"
+                      className="py-2"
+                    />
+                  </InputGroup>
+                  <Form.Text className="text-muted mt-2">
+                    Minimum 6 characters required.
+                  </Form.Text>
+                </Form.Group>
 
-            <Form.Group className="mb-3" controlId="formBasicPassword">
-              <Form.Label className="fw-bold">Password:</Form.Label>
-              <Form.Control
-                onChange={handlePassword}
-                className="input"
-                value={password}
-                type="password"
-              />
-              <Form.Text className="text-muted">
-                Minimum 6 characters.
-              </Form.Text>
-            </Form.Group>
-
-            <div className="d-flex justify-content-end">
-              <Button
-                className="rounded-2"
-                onClick={handleSubmitSignUp}
-                variant="outline-primary"
-              >
-                {loadingSignUp ? "Signing Up..." : "Sign Up"}
-              </Button>
-              <Button
-                className="ms-3"
-                onClick={handleSubmitSignIn}
-                type="submit"
-                variant="success"
-              >
-                {loading ? "Signing In..." : "Sign In"}
-              </Button>
-            </div>
-          </Form>
-        </div>
-      </div>
-    </div>
+                <div className="d-grid gap-2 mt-4">
+                  <Button
+                    onClick={handleSubmitSignIn}
+                    type="submit"
+                    variant="primary"
+                    size="lg"
+                    className="py-2"
+                    disabled={loading}
+                  >
+                    {loading ? (
+                      <span>
+                        <span className="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>
+                        Signing In...
+                      </span>
+                    ) : (
+                      <span>
+                        <FaSignInAlt className="me-2" /> Sign In
+                      </span>
+                    )}
+                  </Button>
+                  
+                  <Button
+                    onClick={handleSubmitSignUp}
+                    variant="outline-secondary"
+                    size="lg"
+                    className="py-2"
+                    disabled={loadingSignUp}
+                  >
+                    {loadingSignUp ? (
+                      <span>
+                        <span className="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>
+                        Creating Account...
+                      </span>
+                    ) : (
+                      <span>
+                        <FaUserPlus className="me-2" /> Create Account
+                      </span>
+                    )}
+                  </Button>
+                </div>
+              </Form>
+            </Card.Body>
+          </Card>
+        </Col>
+      </Row>
+    </Container>
   );
 }
 

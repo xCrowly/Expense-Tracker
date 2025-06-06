@@ -1,5 +1,6 @@
 import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 import getUserData from "./getUserData";
+import { getSavingsGoal } from "./savingsGoal";
 
 const auth = getAuth();
 
@@ -24,6 +25,12 @@ const signIn = async (email, password, navigate) => {
 
     // Fetch user data
     await getUserData(user.uid);
+    
+    // Fetch savings goal
+    const savingsGoal = await getSavingsGoal(user.uid);
+    if (savingsGoal) {
+      localStorage.setItem("savingsGoal", savingsGoal.toString());
+    }
 
     // Navigate to the home page
     if (navigate) {

@@ -11,6 +11,7 @@ import getIncomeData from "./firebase/getIncomeData";
 import { getMonthlyTarget } from "./firebase/addMonthlyTarget";
 import removeUserData from "./firebase/removeUserData";
 import removeIncomeData from "./firebase/removeIncomeData";
+import { getSavingsGoal } from "./firebase/savingsGoal";
 
 // Import new components
 import DashboardCards from "./DashboardCards";
@@ -186,9 +187,7 @@ function HomePageForm() {
     new Date().toISOString().substring(0, 10)
   );
   const [monthlyIncome, setMonthlyIncome] = useState(0);
-  const [savingsGoal, setSavingsGoal] = useState(
-    localStorage.getItem("savingsGoal") || "0"
-  );
+  const [savingsGoal, setSavingsGoal] = useState("0");
   const [incomeSources] = useState([
     "Salary",
     "Freelance",
@@ -204,20 +203,50 @@ function HomePageForm() {
       try {
         const userId = localStorage.getItem("id");
         if (userId) {
+          // Get fresh data from Firebase
           const data = await getIncomeData(userId);
+          
+          // Make sure we're using the latest data from Firebase, not just localStorage
           if (data) {
             const currentMonth = new Date().toISOString().substring(0, 7);
             const monthlyTotal = Object.values(data)
               .filter((entry) => entry.date.startsWith(currentMonth))
               .reduce((sum, entry) => sum + parseInt(entry.amount), 0);
             setMonthlyIncome(monthlyTotal);
+            
+            // Also update the current month income data state
+            const updatedIncomeData = processCurrentMonthIncome();
+            setCurrentMonthIncomeData(updatedIncomeData);
+          } else {
+            // If no data from Firebase, reset the income values
+            setMonthlyIncome(0);
+            setCurrentMonthIncomeData({ entries: [], total: 0 });
           }
         }
       } catch (error) {
         console.error("Error fetching income data:", error);
+        // Reset values on error
+        setMonthlyIncome(0);
+        setCurrentMonthIncomeData({ entries: [], total: 0 });
       }
     };
     fetchIncomeData();
+  }, []);
+
+  // Add useEffect to fetch savings goal
+  useEffect(() => {
+    const fetchSavingsGoal = async () => {
+      try {
+        const userId = localStorage.getItem("id");
+        if (userId) {
+          const goal = await getSavingsGoal(userId);
+          setSavingsGoal(goal.toString());
+        }
+      } catch (error) {
+        console.error("Error fetching savings goal:", error);
+      }
+    };
+    fetchSavingsGoal();
   }, []);
 
   // Add income submission handler
@@ -297,17 +326,22 @@ function HomePageForm() {
       // Remove from Firebase
       await removeIncomeData(userId, incomeId);
 
-      // Update localStorage
-      const userData = JSON.parse(localStorage.getItem("data") || "{}");
-      if (userData.income && userData.income[incomeId]) {
-        delete userData.income[incomeId];
-        localStorage.setItem("data", JSON.stringify(userData));
-
-        // Update current month income data
-        const updatedIncomeData = processCurrentMonthIncome();
-        setCurrentMonthIncomeData(updatedIncomeData);
-        setMonthlyIncome(updatedIncomeData.total);
-      }
+      // Fetch fresh data from Firebase to ensure we have the latest state
+      const freshData = await getIncomeData(userId);
+      
+      // Update local state with the fresh data from Firebase
+      const updatedIncomeData = processCurrentMonthIncome();
+      setCurrentMonthIncomeData(updatedIncomeData);
+      
+      // Calculate the new monthly income from the fresh data
+      const currentMonth = new Date().toISOString().substring(0, 7);
+      const monthlyTotal = freshData ? 
+        Object.values(freshData)
+          .filter(entry => entry && entry.date && entry.date.startsWith(currentMonth))
+          .reduce((sum, entry) => sum + parseInt(entry.amount), 0) 
+        : 0;
+      
+      setMonthlyIncome(monthlyTotal);
     } catch (error) {
       console.error("Error removing income data:", error);
       alert(t("failedToRemove"));

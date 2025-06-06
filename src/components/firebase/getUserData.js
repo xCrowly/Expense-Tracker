@@ -19,11 +19,16 @@ const getUserData = async (userId) => {
     // Get monthly target
     const targetRef = ref(db, `users/${userId}/monthlyTarget`);
     const targetSnapshot = await get(targetRef);
+    
+    // Get savings goal
+    const savingsGoalRef = ref(db, `users/${userId}/savingGoal`);
+    const savingsGoalSnapshot = await get(savingsGoalRef);
 
     const userData = {
       expenses: expensesSnapshot.exists() ? expensesSnapshot.val() : {},
       income: incomeSnapshot.exists() ? incomeSnapshot.val() : {},
-      monthlyTarget: targetSnapshot.exists() ? targetSnapshot.val() : 0
+      monthlyTarget: targetSnapshot.exists() ? targetSnapshot.val() : 0,
+      savingsGoal: savingsGoalSnapshot.exists() ? savingsGoalSnapshot.val() : 0
     };
 
     localStorage.setItem("data", JSON.stringify(userData)); // Save data to localStorage

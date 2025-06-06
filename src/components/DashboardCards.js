@@ -91,7 +91,7 @@ const DashboardCards = ({
               ></div>
             </div>
             <small className="mt-1 d-block" style={{ fontSize: '0.7rem' }}>
-              {Math.round(getBalancePercentage())}% {t("remaining")} {t("ofTotalIncome")}
+              {Math.round(getBalancePercentage())}% {t("remaining")} {t("ofTotalIncome")} 
             </small>
             {getExpenseWarning() && (
               <div className="alert alert-warning p-1 mt-1 mb-0" style={{ fontSize: '0.7rem' }}>
