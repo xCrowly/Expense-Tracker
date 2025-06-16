@@ -1,0 +1,28 @@
+/* Footer optimizations for better performance */
+.font-display {
+  font-display: swap;
+  will-change: auto;
+}
+
+/* Preload critical text */
+#copyright {
+  content-visibility: auto;
+}
+
+/* Optimize icon animations */
+.footer-icon {
+  will-change: transform;
+}
+
+/* Add hover effects with hardware acceleration */
+.footer-link:hover .footer-icon {
+  transform: translateY(-2px);
+}
+
+.footer-link {
+  transition: color 0.2s ease;
+}
+
+.footer-link:hover {
+  color: #0d6efd !important;
+} 

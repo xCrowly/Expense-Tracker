@@ -1,7 +1,10 @@
 import React from "react";
 import { Github, Linkedin, Globe } from "lucide-react";
+import "./footer.css";
 
 function Footer() {
+  const currentYear = new Date().getFullYear();
+  
   const iconStyle = {
     transition: "transform 0.3s ease"
   };
@@ -13,6 +16,12 @@ function Footer() {
   return (
     <footer id="my-footer" className="bg-light text-dark py-3 mt-4" style={footerStyle}>
       <div className="container">
+        <div className="text-center mb-2">
+          <small id="copyright" className="font-display">
+            &copy; {currentYear} Ahmed Eissa. All rights reserved.
+          </small>
+        </div>
+        
         <div className="d-flex flex-column flex-md-row justify-content-center align-items-center gap-3">
           <a 
             href="https://ahmedeissa1.netlify.app" 
@@ -42,12 +51,9 @@ function Footer() {
             <span>GitHub</span>
           </a>
         </div>
-        <div className="text-center mt-2">
-          <small>&copy; {new Date().getFullYear()} Ahmed Eissa. All rights reserved.</small>
-        </div>
       </div>
     </footer>
   );
 }
 
-export default Footer;
+export default React.memo(Footer);
