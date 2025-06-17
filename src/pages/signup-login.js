@@ -8,8 +8,8 @@ import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Alert from "react-bootstrap/Alert";
 import { FaEnvelope, FaLock, FaSignInAlt, FaUserPlus } from "react-icons/fa";
-import signIn from "./firebase/signIn";
-import signUp from "./firebase/signUp";
+import signIn from "../components/firebase/signIn";
+import signUp from "../components/firebase/signUp";
 import { useNavigate } from "react-router-dom";
 
 /**
@@ -82,8 +82,14 @@ function SignupPage() {
     }
   };
 
-  return (  
-    <Container fluid className="py-4 min-vh-auto d-flex align-items-center justify-content-center" >
+  return (
+    <Container
+      fluid
+      className="py-4 min-vh-100 d-flex align-items-center justify-content-center"
+      style={{
+        background: "linear-gradient(135deg, #667eea 0%, #764ba2 100%)",
+      }}
+    >
       <Row className="justify-content-center w-100">
         <Col xs={12} sm={10} md={8} lg={6} xl={5}>
           <Card className="border-0 shadow-lg">
@@ -91,20 +97,20 @@ function SignupPage() {
               <h2 className="text-primary mb-0">Welcome</h2>
               <p className="text-muted">Sign in or create your account</p>
             </Card.Header>
-            
+
             <Card.Body className="px-4 py-4">
               {error && (
                 <Alert variant="danger" className="mb-4 text-center">
                   {error}
                 </Alert>
               )}
-              
+
               <div className="text-center mb-4">
                 <small className="text-muted">
                   <strong>Hint:</strong> you can use any random email.
                 </small>
               </div>
-              
+
               <Form>
                 <Form.Group className="mb-4" controlId="formBasicEmail">
                   <Form.Label className="fw-bold">Email address</Form.Label>
@@ -152,7 +158,11 @@ function SignupPage() {
                   >
                     {loading ? (
                       <span>
-                        <span className="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>
+                        <span
+                          className="spinner-border spinner-border-sm me-2"
+                          role="status"
+                          aria-hidden="true"
+                        ></span>
                         Signing In...
                       </span>
                     ) : (
@@ -161,7 +171,7 @@ function SignupPage() {
                       </span>
                     )}
                   </Button>
-                  
+
                   <Button
                     onClick={handleSubmitSignUp}
                     variant="outline-secondary"
@@ -171,7 +181,11 @@ function SignupPage() {
                   >
                     {loadingSignUp ? (
                       <span>
-                        <span className="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>
+                        <span
+                          className="spinner-border spinner-border-sm me-2"
+                          role="status"
+                          aria-hidden="true"
+                        ></span>
                         Creating Account...
                       </span>
                     ) : (

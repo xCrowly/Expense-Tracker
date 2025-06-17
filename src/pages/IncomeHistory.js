@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from "react";
 import Accordion from "react-bootstrap/Accordion";
 import { useNavigate } from "react-router-dom";
-import { useLanguage } from "../context/LanguageContext";
+import { useLanguage } from "../contexts/LanguageContext";
 import { translations } from "../translations";
 import { formatMonth } from "./history";
-import { IncomeTable } from "./IncomeTable";
-import removeIncomeData from "./firebase/removeIncomeData";
+import { IncomeTable } from "../components/IncomeTable";
+import removeIncomeData from "../components/firebase/removeIncomeData";
 
 // Group income data by month
 const groupIncomeByMonth = (data) => {

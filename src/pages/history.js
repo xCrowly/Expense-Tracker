@@ -3,8 +3,8 @@ import Accordion from "react-bootstrap/Accordion";
 import Spinner from "react-bootstrap/Spinner";
 import Table from "react-bootstrap/Table";
 import { useNavigate } from "react-router-dom";
-import removeUserData from "./firebase/removeUserData";
-import { useLanguage } from "../context/LanguageContext";
+import removeUserData from "../components/firebase/removeUserData";
+import { useLanguage } from "../contexts/LanguageContext";
 import { translations } from "../translations";
 
 // Export utility functions

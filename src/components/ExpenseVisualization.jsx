@@ -13,7 +13,7 @@ import {
 } from "chart.js";
 import { Bar, Pie, Line } from "react-chartjs-2";
 import { Form } from "react-bootstrap";
-import { useLanguage } from "../context/LanguageContext";
+import { useLanguage } from "../contexts/LanguageContext";
 import { translations } from "../translations";
 
 // Register Chart.js components

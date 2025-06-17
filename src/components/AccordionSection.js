@@ -1,8 +1,8 @@
 import React from "react";
 import Accordion from "react-bootstrap/Accordion";
-import { formatMonth } from "./history";
+import { formatMonth } from "../pages/history";
 import { IncomeTable } from "./IncomeTable";
-import { ExpenseTable } from "./history";
+import { ExpenseTable } from "../pages/history";
 
 const AccordionSection = ({
   type, // "income" or "expenses"

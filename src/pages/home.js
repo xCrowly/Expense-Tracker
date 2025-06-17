@@ -1,24 +1,24 @@
 import { React, useEffect, useState, useCallback } from "react";
 import Tabs from "react-bootstrap/Tabs";
 import Tab from "react-bootstrap/Tab";
-import { useLanguage } from "../context/LanguageContext";
+import { useLanguage } from "../contexts/LanguageContext";
 import { translations } from "../translations";
 import { DollarSign, Wallet, PiggyBank } from "lucide-react";
-import addUserData from "./firebase/addUserData";
-import getUserData from "./firebase/getUserData";
-import addIncomeData from "./firebase/addIncomeData";
-import getIncomeData from "./firebase/getIncomeData";
-import { getMonthlyTarget } from "./firebase/addMonthlyTarget";
-import removeUserData from "./firebase/removeUserData";
-import removeIncomeData from "./firebase/removeIncomeData";
-import { getSavingsGoal } from "./firebase/savingsGoal";
+import addUserData from "../components/firebase/addUserData";
+import getUserData from "../components/firebase/getUserData";
+import addIncomeData from "../components/firebase/addIncomeData";
+import getIncomeData from "../components/firebase/getIncomeData";
+import { getMonthlyTarget } from "../components/firebase/addMonthlyTarget";
+import removeUserData from "../components/firebase/removeUserData";
+import removeIncomeData from "../components/firebase/removeIncomeData";
+import { getSavingsGoal } from "../components/firebase/savingsGoal";
 
 // Import new components
-import DashboardCards from "./DashboardCards";
-import AccordionSection from "./AccordionSection";
-import ExpenseForm from "./ExpenseForm";
-import IncomeForm from "./IncomeForm";
-import SavingsForm from "./SavingsForm";
+import DashboardCards from "../components/DashboardCards";
+import AccordionSection from "../components/AccordionSection";
+import ExpenseForm from "../components/ExpenseForm";
+import IncomeForm from "../components/IncomeForm";
+import SavingsForm from "../components/SavingsForm";
 
 // Import utility functions
 import {
@@ -30,7 +30,7 @@ import {
   getExpenseWarning,
   processCurrentMonthExpenses,
   processCurrentMonthIncome,
-} from "./FinanceUtils";
+} from "../components/FinanceUtils";
 
 function HomePageForm() {
   const [cash, setCash] = useState("");

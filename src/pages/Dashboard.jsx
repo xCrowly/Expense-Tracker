@@ -1,12 +1,12 @@
 import React, { useEffect, useState, useRef } from "react";
 import { Container } from "react-bootstrap";
 import { Link } from "react-router-dom";
-import ExpenseVisualization from "./ExpenseVisualization";
-import { getMonthlyTarget } from "./firebase/addMonthlyTarget";
-import { useLanguage } from "../context/LanguageContext";
+import ExpenseVisualization from "../components/ExpenseVisualization";
+import { getMonthlyTarget } from "../components/firebase/addMonthlyTarget";
+import { useLanguage } from "../contexts/LanguageContext";
 import { translations } from "../translations";
-import getIncomeData from "./firebase/getIncomeData";
-import getUserData from "./firebase/getUserData";
+import getIncomeData from "../components/firebase/getIncomeData";
+import getUserData from "../components/firebase/getUserData";
 
 function Dashboard() {
   const [targetSpending, setTargetSpending] = useState("0");
