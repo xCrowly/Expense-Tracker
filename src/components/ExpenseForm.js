@@ -3,7 +3,14 @@ import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import InputGroup from "react-bootstrap/InputGroup";
 import { Link } from "react-router-dom";
-import { DollarSign, NotebookPen, History, CalendarDays, Save } from "lucide-react";
+import {
+  DollarSign,
+  NotebookPen,
+  History,
+  CalendarDays,
+  Save,
+} from "lucide-react";
+import { useNavigate } from "react-router-dom";
 
 const ExpenseForm = ({
   t,
@@ -17,8 +24,10 @@ const ExpenseForm = ({
   loading,
   handleSubmit,
   cashValues,
-  quickNotes
+  quickNotes,
 }) => {
+  const navigate = useNavigate();
+
   return (
     <Form onSubmit={handleSubmit}>
       <Form.Label className="fw-bold">{t("expenses")}:</Form.Label>
@@ -39,7 +48,13 @@ const ExpenseForm = ({
 
       {/* Cash Buttons */}
       <div className="my-3">
-        <p className="mb-2 fw-bold">{t("quickCash")}:</p>
+        <p
+          className="mb-2 fw-bold"
+          style={{ cursor: "pointer" }}
+          onClick={() => navigate("/settings")}
+        >
+          {t("quickCash")}:
+        </p>
         <div className="d-flex flex-wrap justify-content-start gap-2">
           {cashValues.map((amount) => (
             <Button
@@ -81,7 +96,13 @@ const ExpenseForm = ({
 
       {/* Quick Notes Buttons */}
       <div className="my-3">
-        <p className="mb-2 fw-bold">{t("quickNotes")}:</p>
+        <p
+          className="mb-2 fw-bold"
+          style={{ cursor: "pointer" }}
+          onClick={() => navigate("/settings")}
+        >
+          {t("quickNotes")}:
+        </p>
         <div className="d-flex flex-wrap justify-content-start gap-2">
           {quickNotes.map((text) => (
             <Button
@@ -119,4 +140,4 @@ const ExpenseForm = ({
   );
 };
 
-export default ExpenseForm; 
+export default ExpenseForm;

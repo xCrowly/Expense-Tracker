@@ -86,9 +86,6 @@ function SignupPage() {
     <Container
       fluid
       className="py-4 min-vh-100 d-flex align-items-center justify-content-center"
-      style={{
-        background: "linear-gradient(135deg, #667eea 0%, #764ba2 100%)",
-      }}
     >
       <Row className="justify-content-center w-100">
         <Col xs={12} sm={10} md={8} lg={6} xl={5}>
@@ -107,7 +104,7 @@ function SignupPage() {
 
               <div className="text-center mb-4">
                 <small className="text-muted">
-                  <strong>Hint:</strong> you can use any random email.
+                  Hint: you can use any random email!
                 </small>
               </div>
 
