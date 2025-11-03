@@ -34,10 +34,10 @@ function NavBar() {
     }
   }, [location.pathname]);
 
-  function getName() {
-    const email = localStorage.getItem("email");
-    return email ? email.split("@")[0] : "";
-  }
+  // function getName() {
+  //   const email = localStorage.getItem("email");
+  //   return email ? email.split("@")[0] : "";
+  // }
 
   function signOut() {
     // Clear all authentication related items
@@ -67,10 +67,10 @@ function NavBar() {
   };
 
   return (
-    <Navbar className="navbar-styling mb-3 p-3 shadow" sticky="top" style={{ zIndex: 1030 }}>
+    <Navbar className="navbar-styling mb-3 py-3 shadow" sticky="top" style={{ zIndex: 1030 }}>
       <Container>
         <Link
-          className="nav-title me-0 text-primary fs-5 fw-bold text-decoration-none"
+          className="nav-title me-0 text-primary fs-6 fw-bold text-decoration-none"
           to="/home"
         >
           {t("expenseTracker")}
@@ -85,7 +85,7 @@ function NavBar() {
                   className="text-decoration-none text-secondary d-flex align-items-center gap-2"
                 >
                   <UserCog size={20} className="text-success" />
-                  <i>{getName()}</i>
+                  <i>{language === "en" ? "Profile" : "الملف"}</i>
                 </Dropdown.Toggle>
 
                 <Dropdown.Menu style={dropdownStyle}>
@@ -131,10 +131,10 @@ function NavBar() {
                 variant="outline-primary"
                 size="sm"
                 onClick={toggleLanguage}
-                className="me-3 d-flex align-items-center gap-2"
+                className="d-flex align-items-center gap-2"
               >
                 <Globe size={16} />
-                {language === "en" ? "العربية" : "English"}
+                {language === "en" ? "ع" : "E"}
               </Button>
             </>
           )}

@@ -22,8 +22,8 @@ const DashboardCards = ({
         >
           <div className="card-body py-2">
             <div className="d-flex justify-content-between align-items-center">
-              <h6 className="card-title fw-bold mb-0">{t("monthlyIncome")}</h6>
-              <h4 className="card-text mb-0">${monthlyIncome}</h4>
+              <h6 className="card-title mb-0">{t("monthlyIncome")}</h6>
+              <h6 className="card-text mb-0">${monthlyIncome}</h6>
             </div>
           </div>
         </div>
@@ -36,10 +36,10 @@ const DashboardCards = ({
         >
           <div className="card-body py-2">
             <div className="d-flex justify-content-between align-items-center">
-              <h6 className="card-title fw-bold mb-0">
+              <h6 className="card-title mb-0">
                 {t("thisMonthExpenses")}
               </h6>
-              <h4 className="card-text mb-0">${getCurrentMonthExpenses()}</h4>
+              <h6 className="card-text mb-0">${getCurrentMonthExpenses()}</h6>
             </div>
           </div>
         </div>
@@ -52,8 +52,8 @@ const DashboardCards = ({
         >
           <div className="card-body py-2">
             <div className="d-flex justify-content-between align-items-center">
-              <h6 className="card-title fw-bold mb-0">{t("monthlyTarget")}</h6>
-              <h4 className="card-text mb-0">${targetSpending}</h4>
+              <h6 className="card-title mb-0">{t("monthlyTarget")}</h6>
+              <h6 className="card-text mb-0">${targetSpending}</h6>
             </div>
             <div className="progress bg-light mt-1" style={{ height: "6px" }}>
               <div
@@ -100,8 +100,8 @@ const DashboardCards = ({
         >
           <div className="card-body py-2">
             <div className="d-flex justify-content-between align-items-center">
-              <h6 className="card-title fw-bold mb-0">{t("netBalance")}</h6>
-              <h4 className="card-text mb-0">${getNetBalance()}</h4>
+              <h6 className="card-title mb-0">{t("netBalance")}</h6>
+              <h6 className="card-text mb-0">${getNetBalance()}</h6>
             </div>
             <div className="progress bg-light mt-1" style={{ height: "6px" }}>
               <div
